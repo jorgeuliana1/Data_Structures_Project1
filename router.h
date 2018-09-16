@@ -1,5 +1,5 @@
-#ifndef ROUTER
-#define ROUTER
+#ifndef ROUTER_H
+#define ROUTER_H
 
 typedef struct router Router;
 /*
@@ -11,5 +11,5 @@ Output: None.
 Postcondition: Router is inicialized.
 */
 void registerRouter(Router * r, char * n, char * o);
-void insertRout(RouterList * l, Router * t);
+
 #endif

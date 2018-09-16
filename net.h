@@ -1,12 +1,9 @@
-#ifndef NET
-#define NET
+#ifndef NET_H
+#define NET_H
 
-typedef struct routerlist RouterList;
-typedef struct terminallist TerminalList;
-typedef struct routercell RouterCell;
-typedef struct terminalcell TerminalCell;
-
-void inicializeTermList(TerminalList * l);
-void insertTerm(TerminalList * l, Terminal * t);
+void linkRouterToTerminal(Router * r, Terminal * t);
+void insertRouter(List * l, Router * r);
+void insertTerminal(List * l, Terminal * t);
+void printRouter(Router * r);
 
 #endif
