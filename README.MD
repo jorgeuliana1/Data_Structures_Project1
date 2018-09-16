@@ -1,14 +1,14 @@
 # OUR DATA STRUCTURES PROJECT (2018/2)
-Project by Jorge and Lucca
+Project by @jorgeuliana1 and Lucca
 
 ## Messages Area:
 ### The example message (DD-MM-YYYY):
 This is a message
 ### Messages to Lucca (16 - 09 - 2018):
-Here I am going to send you some ideas and specifications.
+Here I am going to send you some ideas and specifications.\
 I am open to any suggestions, this is only my original idea.
 #### About the code appearence:
-Well, I am thinking about something like this:
+Well, I am thinking about something like this:\
 Identation size: 2 spaces
 **Apearence:**
 ```c
@@ -24,6 +24,7 @@ void codeBlock(char ThisIsAnArgument1, float ThisIsAnArgument2) {
 ```
 #### About the libraries:
 **main.c:**
+'''c
 Initial idea:
   openFile;
   doInicializations;
@@ -35,9 +36,9 @@ Initial idea:
   doFinalizations;
   closeFile;
   finish;
-
+'''
 **net.h:**
-This library is responsible for the TypeLists and TypeCells, it would be great.
+This library is responsible for the TypeLists and TypeCells, it would be great.\
 if you knew how to implementate the structures in a generic way, because I don't know how.
 
 **router.h:**
@@ -46,5 +47,5 @@ Well, it controls the Router type, not much to say.
 **router.h:**
 Well, it controls the Terminal type, also not much to say.
 #### Extra:
-For more info look at the header files.
+For more info look at the header files.\
 You can freely edit this file. I highly recommend you to follow the guidelines, but you are free.
