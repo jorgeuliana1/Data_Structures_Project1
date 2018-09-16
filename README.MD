@@ -23,8 +23,10 @@ void codeBlock(char ThisIsAnArgument1, float ThisIsAnArgument2) {
 }
 ```
 #### About the libraries:
-**main.c:**\
-Initial idea:\
+**main.c:**
+\
+Initial idea:
+\
 ```c
   openFile;
   doInicializations;
