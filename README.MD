@@ -39,7 +39,7 @@ Initial idea:
   finish;
 ```
 \
-**net.h:**
+**list.h:**
 \
 This library is responsible for the TypeLists and TypeCells, it would be great.
 \
