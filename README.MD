@@ -1,15 +1,15 @@
 # OUR DATA STRUCTURES PROJECT (2018/2)
-Project by @jorgeuliana1 and Lucca\
+Project by @jorgeuliana1 and Lucca
 
 ## Messages Area:
 ### The example message (DD-MM-YYYY):
-This is a message\
+This is a message
 ### Messages to Lucca (16 - 09 - 2018):
 Here I am going to send you some ideas and specifications.\
-I am open to any suggestions, this is only my original idea.\
+I am open to any suggestions, this is only my original idea.
 #### About the code appearence:
 Well, I am thinking about something like this:\
-Identation size: 2 spaces\
+Identation size: 2 spaces
 **Apearence:**
 ```c
 #include <lib.h>
@@ -26,7 +26,6 @@ void codeBlock(char ThisIsAnArgument1, float ThisIsAnArgument2) {
 **main.c:**
 \
 Initial idea:
-\
 ```c
   openFile;
   doInicializations;
@@ -48,7 +47,7 @@ if you knew how to implementate the structures in a generic way, because I don't
 
 **router.h:**
 \
-Well, it controls the Router type, not much to say.\
+Well, it controls the Router type, not much to say.
 
 **router.h:**
 \
