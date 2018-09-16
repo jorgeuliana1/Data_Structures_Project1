@@ -36,16 +36,21 @@ Initial idea:\
   doFinalizations;
   closeFile;
   finish;
-```\
-**net.h:**\
-This library is responsible for the TypeLists and TypeCells, it would be great.\
+```
+\
+**net.h:**
+\
+This library is responsible for the TypeLists and TypeCells, it would be great.
+\
 if you knew how to implementate the structures in a generic way, because I don't know how.
 
-**router.h:**\
+**router.h:**
+\
 Well, it controls the Router type, not much to say.\
 
-**router.h:**\
-Well, it controls the Terminal type, also not much to say.\
+**router.h:**
+\
+Well, it controls the Terminal type, also not much to say.
 #### Extra:
 For more info look at the header files.\
 You can freely edit this file. I highly recommend you to follow the guidelines, but you are free.
