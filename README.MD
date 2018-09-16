@@ -1,13 +1,13 @@
-#OUR DATA STRUCTURES PROJECT (2018/2)
+# OUR DATA STRUCTURES PROJECT (2018/2)
 Project by Jorge and Lucca
 
-##Messages Area:
-###The example message (DD-MM-YYYY):
+## Messages Area:
+### The example message (DD-MM-YYYY):
 This is a message
-###Messages to Lucca (16 - 09 - 2018):
+### Messages to Lucca (16 - 09 - 2018):
 Here I am going to send you some ideas and specifications.
 I am open to any suggestions, this is only my original idea.
-####About the code appearence:
+#### About the code appearence:
 Well, I am thinking about something like this:
 Identation size: 2 spaces
 **Apearence:**
@@ -22,7 +22,7 @@ void codeBlock(char ThisIsAnArgument1, float ThisIsAnArgument2) {
   return;
 }
 ```
-####About the libraries:
+#### About the libraries:
 **main.c:**
 Initial idea:
   openFile;
@@ -45,6 +45,6 @@ Well, it controls the Router type, not much to say.
 
 **router.h:**
 Well, it controls the Terminal type, also not much to say.
-####Extra:
+#### Extra:
 For more info look at the header files.
-You can freely edit this file. I highly recommend you to follow my guidelines, but you are free.
+You can freely edit this file. I highly recommend you to follow the guidelines, but you are free.
