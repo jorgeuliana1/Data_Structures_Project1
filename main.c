@@ -4,6 +4,6 @@
 #include "terminal.h"
 
 int main() {
-  printf("It's gonna be pretty nice!");
+  //Add main functions here
   return 0;
 }
