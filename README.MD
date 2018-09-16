@@ -24,7 +24,7 @@ void codeBlock(char ThisIsAnArgument1, float ThisIsAnArgument2) {
 ```
 #### About the libraries:
 **main.c:**
-'''c
+```c
 Initial idea:
   openFile;
   doInicializations;
@@ -36,7 +36,7 @@ Initial idea:
   doFinalizations;
   closeFile;
   finish;
-'''
+```
 **net.h:**
 This library is responsible for the TypeLists and TypeCells, it would be great.\
 if you knew how to implementate the structures in a generic way, because I don't know how.
