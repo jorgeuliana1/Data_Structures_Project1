@@ -3,19 +3,6 @@
 #include <string.h>
 #include "temp_lib.h"
 
-struct terminal {
-  char * name;
-  char * local;
-  Router * r;
-};
-
-struct router {
-  char * name;
-  char * oper;
-  Terminal * t;
-  Router * link;
-};
-
 struct list {
   Cell * first;
 };
@@ -25,13 +12,20 @@ struct cell {
   Cell * next;
 };
 
-void linkRouterToTerminal(Router * r, Terminal * t) {
-  t->r = r;
-  r->t = t;
-  return;
-}
+struct router {
+  char * name;
+  char * oper;
+  Terminal * t;
+  Router * link;
+};
 
-void registerRouter(Router * r, char * n, char * o) {
+struct terminal {
+  char * name;
+  char * local;
+  Router * r;
+};
+
+void createRouter(Router * r, char * n, char * o) {
   r = (Router *)malloc(sizeof(Router));
   r->name = (char *)malloc(strlen(n)*sizeof(char)+1);
   strcpy(r->name, n);
@@ -39,6 +33,12 @@ void registerRouter(Router * r, char * n, char * o) {
   strcpy(r->oper, o);
   r->link = NULL;
   r->t = NULL;
+  return;
+}
+
+void linkRouterToTerminal(Router * r, Terminal * t) {
+  t->r = r;
+  r->t = t;
   return;
 }
 

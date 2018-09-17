@@ -6,7 +6,7 @@ typedef struct cell Cell;
 typedef struct router Router;
 typedef struct terminal Terminal;
 
-void registerRouter(Router * r, char * n, char * o);
+void createRouter(Router * r, char * n, char * o);
 void inicializeList(List * l);
 void registerTerminal(Terminal * t, char * n, char * l);
 void linkRouterToTerminal(Router * r, Terminal * t);
