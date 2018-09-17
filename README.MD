@@ -1,5 +1,5 @@
 # OUR DATA STRUCTURES PROJECT (2018/2)
-Project by @jorgeuliana1 and Lucca
+Project by @jorgeuliana1 and @LuccaPassos
 
 ## Messages Area:
 ### The example message (DD-MM-YYYY):
