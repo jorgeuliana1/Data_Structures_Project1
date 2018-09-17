@@ -5,7 +5,7 @@
 #include "router.h"
 #include "terminal.h"
 
-int main() {
+int main(int argv, char* argc[]) {
   //Add main functions here
   //START TEST BLOCK
   Router * r;
