@@ -4,6 +4,13 @@ Project by @jorgeuliana1 and @LuccaPassos
 ## Messages Area:
 ### The example message (DD-MM-YYYY):
 This is a message
+### "Version 0.1" (18-09-2018):
+We made some progress!\
+I am going to write everything here.
+**Think different (And simple):**\
+Now there's only one library, wich is nice! I named it "net", because it is really short and fits its functionalities (basically it controls the net).\
+We can create other libs in the future!
+
 ### Messages to Lucca (16 - 09 - 2018):
 Here I am going to send you some ideas and specifications.\
 I am open to any suggestions, this is only my original idea.
