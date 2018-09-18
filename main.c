@@ -1,25 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "net.h"
-#include "list.h"
-#include "router.h"
-#include "terminal.h"
 
 int main(int argv, char* argc[]) {
-  //Add main functions here
-  //START TEST BLOCK
-  Router * r;
-  Terminal * t;
-  registerRouter(r, "router1", "gvt");
-  registerTerminal(t, "terminal1", "VV");
-  List * rl;
-  List * tl;
-  inicializeList(rl);
-  insertRouter(rl, r);
-  inicializeList(tl);
-  insertTerminal(tl, t);
-  linkRouterToTerminal(r, t);
-  printRouter(tl->first->r);
-  //END TEST BLOCK
-  return 0;
+    Router * rlist = NULL;
+    Terminal * tlist = NULL;
+
+    rlist = registerRouter(rlist, "router1", "gvt");
+    tlist = registerTerminal(tlist, "terminal1", "vilavelha");
+    tlist = registerTerminal(tlist, "terminal2", "vitoria");
+    tlist = registerTerminal(tlist, "terminal3", "maruipe");
+
+    printRouterAndTerminal(rlist,tlist);
+
+    linkRouterToTerminal("router1", rlist, "terminal1", tlist);
+
+    printRouterAndTerminal(rlist,tlist);
+
+    return 0;
 }
