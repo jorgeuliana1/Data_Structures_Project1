@@ -1,17 +1,15 @@
-#ifndef TEMPLIB_H
-#define TEMPLIB_H
+#ifndef LIB_H
+#define LIB_H
 
-typedef struct list List;
-typedef struct cell Cell;
 typedef struct router Router;
 typedef struct terminal Terminal;
 
-void createRouter(Router * r, char * n, char * o);
-void inicializeList(List * l);
-void registerTerminal(Terminal * t, char * n, char * l);
-void linkRouterToTerminal(Router * r, Terminal * t);
-void insertRouter(List * l, Router * r);
-void insertTerminal(List * l, Terminal * t);
-void printRouter(Router * r);
+Router * registerRouter(Router * r, char * n, char * o);
+//void inicializeList(List * l);
+Terminal * registerTerminal(Terminal * t, char * n, char * l);
+void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist);
+//void insertRouter(List * l, Router * r);
+//Terminal * insertTerminal(List * l, Terminal * t);
+void printRouterAndTerminal(Router * r, Terminal * t);
 
 #endif
