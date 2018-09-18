@@ -32,17 +32,27 @@ static char * adjustString(char * name){
 }
 
 static Terminal * findTerminal(Terminal * tlist, char * name){
-    while(strcmp(tlist->name,name)){
+    while(tlist != NULL && strcmp(tlist->name,name)){
         tlist = tlist->Next;
     }
     return tlist;
 }
 
 static Router * findRouter(Router * rlist, char * name){
-    while(strcmp(rlist->name,name)){
+    while(rlist != NULL && strcmp(rlist->name,name)){
         rlist = rlist->Next;
     }
     return rlist;
+}
+
+static void printRoutersLinks(Router * rlist, Terminal * tlist) {
+    Terminal * t = tlist;
+    while(t != NULL) {
+      if(t->r != NULL)
+        printf("%s --- %s\n", t->name, t->r->name);
+      t = t->Next;
+    }
+    return;
 }
 //END OF STATIC FUNCTIONS AREA
 Router * registerRouter(Router * r, char * n, char * o) {
@@ -76,7 +86,9 @@ Terminal * registerTerminal(Terminal * t, char * n, char * l) {
 void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist) {
     Terminal * t = findTerminal(tlist, tname);
     Router * r = findRouter(rlist, rname);
-    t->r = r;
+    if(r != NULL && t != NULL)
+      t->r = r;
+    else printf("\nError: NOT FOUND\n\n");
 }
 
 void printRouterAndTerminal(Router * r, Terminal * t) {
@@ -115,4 +127,10 @@ Terminal * removeTerminal(Router * r, Terminal * ter, char * tn) {
     ter->Next = tem->Next;
     free(tem);
     return ter;
+}
+
+void unlinkTerminal(char * tname, Terminal * tlist) {
+    Terminal * t = findTerminal(tlist, tname);
+    t->r = NULL;
+    return;
 }

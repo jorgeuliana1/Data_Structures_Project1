@@ -52,4 +52,12 @@ Output: List with removed terminal.
 Postcondition: Terminal is removed from the network.
 */
 Terminal * removeTerminal(Router * r, Terminal * ter, char * tn);
+/*
+--unlinkTerminal--
+Precondition: Terminal is linked to a router.
+Input: Terminal name and list.
+Output: None.
+Postcondition: Terminal hasn't any link.
+*/
+void unlinkTerminal(char * tname, Terminal * tlist);
 #endif
