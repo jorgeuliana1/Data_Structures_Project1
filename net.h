@@ -4,7 +4,6 @@
 typedef struct router Router;
 typedef struct terminal Terminal;
 
-
 /*
 --registerRouter--
 Precondition: Router * r is not inicialized.
@@ -37,5 +36,20 @@ Output: None.
 Postcondition: All routers and terminals are printed.
 */
 void printRouterAndTerminal(Router * r, Terminal * t);
-
+/*
+--removeRouter--
+Precondition: Router and terminal are inicilized.
+Input: Router and terminal lists and router name.
+Output: List with removed router.
+Postcondition: Router is removed from the network.
+*/
+Router * removeRouter(Router * r, Terminal * ter, char * rn);
+/*
+--removeTerminal--
+Precondition: Router and terminal are inicilized.
+Input: Router and terminal lists and terminal name.
+Output: List with removed terminal.
+Postcondition: Terminal is removed from the network.
+*/
+Terminal * removeTerminal(Router * r, Terminal * ter, char * tn);
 #endif
