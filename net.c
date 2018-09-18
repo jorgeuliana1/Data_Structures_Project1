@@ -44,6 +44,16 @@ static Router * findRouter(Router * rlist, char * name){
     }
     return rlist;
 }
+
+static void printRoutersLinks(Router * rlist, Terminal * tlist) {
+    Terminal * t = tlist;
+    while(t != NULL) {
+      if(t->r != NULL)
+        printf("%s --- %s\n", t->name, t->r->name);
+      t = t->Next;
+    }
+    return;
+}
 //END OF STATIC FUNCTIONS AREA
 Router * registerRouter(Router * r, char * n, char * o) {
     Router * newRouter = (Router *)malloc(sizeof(Router));
