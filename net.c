@@ -92,3 +92,27 @@ void printRouterAndTerminal(Router * r, Terminal * t) {
         t = t->Next;
     }
 }
+
+Router * removeRouter(Router * r, Terminal * ter, char * rn) {
+    while(r->Next != NULL && strcmp(r->Next->name, rn)) {
+      r = r->Next;
+    }
+    Router * tem = r->Next;
+    r->Next = tem->Next;
+    while(ter->r != NULL && strcmp(ter->r->name, rn)) {
+      ter = ter->Next;
+    }
+    ter->r = NULL;
+    free(tem);
+    return r;
+}
+
+Terminal * removeTerminal(Router * r, Terminal * ter, char * tn) {
+    while(ter->Next != NULL && strcmp(ter->Next->name, tn)) {
+      ter = ter->Next;
+    }
+    Terminal * tem = ter->Next;
+    ter->Next = tem->Next;
+    free(tem);
+    return ter;
+}
