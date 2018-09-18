@@ -21,6 +21,12 @@ int main(int argv, char* argc[]) {
     printRouterAndTerminal(rlist, tlist);
 
     linkRouterToTerminal("router1", rlist, "terminal1", tlist);
+    linkRouterToTerminal("router1", rlist, "terminal2", tlist);
+    linkRouterToTerminal("router1", rlist, "terminal3", tlist);
+
+    printRouterAndTerminal(rlist,tlist);
+
+    unlinkTerminal("terminal1", tlist);
 
     printRouterAndTerminal(rlist,tlist);
 

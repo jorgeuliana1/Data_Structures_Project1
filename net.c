@@ -32,14 +32,14 @@ static char * adjustString(char * name){
 }
 
 static Terminal * findTerminal(Terminal * tlist, char * name){
-    while(strcmp(tlist->name,name)){
+    while(tlist != NULL && strcmp(tlist->name,name)){
         tlist = tlist->Next;
     }
     return tlist;
 }
 
 static Router * findRouter(Router * rlist, char * name){
-    while(strcmp(rlist->name,name)){
+    while(rlist != NULL && strcmp(rlist->name,name)){
         rlist = rlist->Next;
     }
     return rlist;
@@ -76,7 +76,9 @@ Terminal * registerTerminal(Terminal * t, char * n, char * l) {
 void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist) {
     Terminal * t = findTerminal(tlist, tname);
     Router * r = findRouter(rlist, rname);
-    t->r = r;
+    if(r != NULL && t != NULL)
+      t->r = r;
+    else printf("\nError: NOT FOUND\n\n");
 }
 
 void printRouterAndTerminal(Router * r, Terminal * t) {
@@ -115,4 +117,10 @@ Terminal * removeTerminal(Router * r, Terminal * ter, char * tn) {
     ter->Next = tem->Next;
     free(tem);
     return ter;
+}
+
+void unlinkTerminal(char * tname, Terminal * tlist) {
+    Terminal * t = findTerminal(tlist, tname);
+    t->r = NULL;
+    return;
 }
