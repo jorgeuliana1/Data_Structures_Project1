@@ -1,14 +1,23 @@
+
+#include "lib.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "temp_lib.h"
 
 int main(int argv, char* argc[]) {
-  //Add main functions here
-  //START TEST BLOCK
-  Router * r;
-  Terminal * t;
-  createRouter(r, "router1", "gvt");
-  //printRouter(r);
-  //END TEST BLOCK
-  return 0;
+
+    Router * rlist = NULL;
+    Terminal * tlist = NULL;
+
+    rlist = registerRouter(rlist, "router1", "gvt");
+    tlist = registerTerminal(tlist, "terminal1", "vilavelha");
+    tlist = registerTerminal(tlist, "terminal2", "vitoria");
+    tlist = registerTerminal(tlist, "terminal3", "maruipe");
+
+    printRouterAndTerminal(rlist,tlist);
+
+    linkRouterToTerminal("router1", rlist, "terminal1", tlist);
+
+    printRouterAndTerminal(rlist,tlist);
+
+    return 0;
 }
