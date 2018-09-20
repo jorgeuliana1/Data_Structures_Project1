@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "net.h"
-#include "readFile.h"
-
+/*
 void PlayALittle(FILE * f) {
     //Deve imprimir segunda linha do arquivo
     Command * c = readCommand(f);
@@ -17,6 +15,7 @@ void PlayALittle(FILE * f) {
 }
 
 int main(int argv, char* argc[]) {
+    */
     /*
     Router * rlist = NULL;
     Terminal * tlist = NULL;
@@ -45,8 +44,9 @@ int main(int argv, char* argc[]) {
 
     printRouterAndTerminal(rlist,tlist);
     */
+    /*
     FILE * f = openReadingFile(argv, argc);
     PlayALittle(f);
     closeReadingFile(f);
     return 0;
-}
+}*/
