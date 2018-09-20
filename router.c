@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "connections.h"
+#include "router.h"
 //STRUCT AREA
 struct router {
     char * name;
@@ -37,11 +39,9 @@ Router * registerRouter(Router * r, char * n, char * o) {
     return newRouter;
 }
 
-Router * removeRouter(Router * r, Terminal * ter, char * rn) {
+Router * removeRouter(Router * r, char * rn) {
     Router * tem = findRouter(r, rn);
     r->Next = tem->Next;
-    ter = findTerminalbyRouter(ter, rn);
-    disconnectRouter(ter);
     free(tem);
     return r;
 }

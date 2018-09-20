@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "router.h"
+#include "terminal.h"
 //STRUCT AREA
 struct terminal {
     char * name;
@@ -26,8 +28,11 @@ static void printTerminalLinks(Terminal * tlist) {
     return;
 }
 //END OF STATIC FUNCTIONS AREA
-void disconnectRouter(Terminal * t) {
-    t->r = NULL;
+void disconnectRouter(Terminal * t, char * rn) {
+    while(t != NULL) {
+        t = findTerminalbyRouter(t, rn);
+        t->r = NULL;
+    }
 }
 
 Terminal * findTerminalbyRouter(Terminal * t, char * rn) {
@@ -58,19 +63,8 @@ Terminal * registerTerminal(Terminal * t, char * n, char * l) {
     return newTerminal;
 }
 
-void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist) {
-    Terminal * t = findTerminal(tlist, tname);
-    Router * r = findRouter(rlist, rname);
-    if(r != NULL && t != NULL)
-      t->r = r;
-    else printf("\nError: NOT FOUND\n\n");
-}
-
-Terminal * removeTerminal(Router * r, Terminal * ter, char * tn) {
-    while(ter->Next != NULL && strcmp(ter->Next->name, tn)) {
-      ter = ter->Next;
-    }
-    Terminal * tem = ter->Next;
+Terminal * removeTerminal(Terminal * ter, char * tn) {
+    Terminal * tem = findTerminal(ter, tn);
     ter->Next = tem->Next;
     free(tem);
     return ter;

@@ -2,7 +2,7 @@
 #define TERMINAL_H
 typedef struct terminal Terminal;
 
-void disconnectRouter(Terminal * t);
+void disconnectRouter(Terminal * t, char * rn);
 Terminal * findTerminalbyRouter(Terminal * t, char * rn);
 Terminal * findTerminal(Terminal * tlist, char * name);
 /*
@@ -15,22 +15,13 @@ Postcondition: Terminsl is inicialized and on the list.
 Terminal * registerTerminal(Terminal * t, char * n, char * l);
 
 /*
---linkRouterToTerminal--
-Precondition: Router and terminal are not linked.
-Input: Router name, router list, terminal name, terminal list.
-Output: None.
-Postcondition: Terminal and router are linked.
-*/
-void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist);
-
-/*
 --removeTerminal--
 Precondition: Router and terminal are inicilized.
 Input: Router and terminal lists and terminal name.
 Output: List with removed terminal.
 Postcondition: Terminal is removed from the network.
 */
-Terminal * removeTerminal(Router * r, Terminal * ter, char * tn);
+Terminal * removeTerminal(Terminal * ter, char * tn);
 
 /*
 --unlinkTerminal--
