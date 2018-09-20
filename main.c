@@ -1,8 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "net.h"
+#include "readFile.h"
+
+void PlayALittle(FILE * f) {
+    //Deve imprimir segunda linha do arquivo
+    Command * c = readCommand(f);
+    c = destroyCommand(c);
+    c = readCommand(f);
+    char * str2 = getArgument(c, 0);
+    char * str3 = getArgument(c, 1);
+    char * str = getHeader(c);
+    printf("%s %s %s\n", str, str2, str3);
+    destroyCommand(c);
+    return;
+}
 
 int main(int argv, char* argc[]) {
+    /*
     Router * rlist = NULL;
     Terminal * tlist = NULL;
 
@@ -29,6 +44,9 @@ int main(int argv, char* argc[]) {
     unlinkTerminal("terminal1", tlist);
 
     printRouterAndTerminal(rlist,tlist);
-
+    */
+    FILE * f = openReadingFile(argv, argc);
+    PlayALittle(f);
+    closeReadingFile(f);
     return 0;
 }
