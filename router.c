@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "connections.h"
+#include "terminal.h"
 #include "router.h"
+
 //STRUCT AREA
 struct router {
     char * name;
@@ -11,6 +12,7 @@ struct router {
     Router * Next;
 };
 //END OF STRUCT AREA
+
 //STATIC FUNCTIONS AREA
 static char * adjustString(char * name){
     char * space = (char *)malloc(strlen(name)*sizeof(char)+1);
@@ -18,6 +20,11 @@ static char * adjustString(char * name){
     return space;
 }
 //END OF STATIC FUNCTIONS AREA
+
+Router * inicializeList(){
+    return NULL;
+}
+
 Router * findRouter(Router * rlist, char * name) {
     while(rlist != NULL && strcmp(rlist->name,name)){
         rlist = rlist->Next;
@@ -38,12 +45,25 @@ Router * registerRouter(Router * r, char * n, char * o) {
     }
     return newRouter;
 }
+//  PROBLEMATIC
+Router * removeRouter(Router * rlist, Terminal * tlist, char * rn) {
+    Router * temporary = findRouter(rlist, rn);
+    rlist->Next = temporary->Next; //what if router is first in list?
+    tlist = findTerminalbyRouter(tlist, rn); //There could be many terminals w one router
+    unlinkTerminal(tlist);
+    free(temporary); //What about its name and stuff
+    return rlist;
+}
 
-Router * removeRouter(Router * r, char * rn) {
-    Router * tem = findRouter(r, rn);
-    r->Next = tem->Next;
-    free(tem);
-    return r;
+void carrierFrequency(Router * rlist, char * carrier){
+    int i = 0;
+    while(rlist != NULL){
+        if(!strcmp(rlist->carrier,carrier))
+            i++;
+        rlist = rlist->Next;
+    }
+    i ? printf("There are %d routers from '%s'.\n", i, carrier) :
+    printf("There are no routers from '%s'.\n", carrier);
 }
 
 void printRouters(Router * r) {

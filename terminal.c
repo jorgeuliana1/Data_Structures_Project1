@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "router.h"
 #include "terminal.h"
+#include "router.h"
+
 //STRUCT AREA
 struct terminal {
     char * name;
-    char * local;
+    char * place;
     Terminal * Next;
     Router * r;
 };
 //END OF STRUCT AREA
+
 //STATIC FUNCTIONS AREA
 static char * adjustString(char * name){
     char * space = (char *)malloc(strlen(name)*sizeof(char)+1);
@@ -27,19 +29,24 @@ static void printTerminalLinks(Terminal * tlist) {
     }
     return;
 }
-//END OF STATIC FUNCTIONS AREA
-void disconnectRouter(Terminal * t, char * rn) {
-    while(t != NULL) {
-        t = findTerminalbyRouter(t, rn);
-        t->r = NULL;
-    }
+
+static void freeTerminal(Terminal * t){
+    free(t->name);
+    free(t->place);
+    free(t);
 }
 
-Terminal * findTerminalbyRouter(Terminal * t, char * rn) {
-    while(t != NULL && strcmp(routerName(t->r), rn)) {
-        t = t->Next;
-    }
-    return t;
+static int wasntFound(void * a){
+    if(a == NULL)
+        return 1;
+    else
+        return 0;
+}
+
+//END OF STATIC FUNCTIONS AREA
+
+Terminal * inicializeList(){
+    return NULL;
 }
 
 Terminal * findTerminal(Terminal * tlist, char * name) {
@@ -49,10 +56,17 @@ Terminal * findTerminal(Terminal * tlist, char * name) {
     return tlist;
 }
 
+Terminal * findTerminalbyRouter(Terminal * t, char * rn) {
+    while(t != NULL && strcmp(routerName(t->r), rn)) {
+        t = t->Next;
+    }
+    return t;
+}
+
 Terminal * registerTerminal(Terminal * t, char * n, char * l) {
     Terminal * newTerminal = (Terminal*)malloc(sizeof(Terminal));
     newTerminal->name = adjustString(n);
-    newTerminal->local = adjustString(l);
+    newTerminal->place = adjustString(l);
     newTerminal->r = NULL;
 
     if(!t) { //If terminal list is empty
@@ -63,23 +77,59 @@ Terminal * registerTerminal(Terminal * t, char * n, char * l) {
     return newTerminal;
 }
 
-Terminal * removeTerminal(Terminal * ter, char * tn) {
-    Terminal * tem = findTerminal(ter, tn);
-    ter->Next = tem->Next;
-    free(tem);
-    return ter;
+void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist) {
+    Terminal * t = findTerminal(tlist, tname);
+    Router * r = findRouter(rlist, rname);
+    if(r != NULL && t != NULL)
+        if(t->r != NULL)
+            t->r = r;
+        else
+            printf("\nError: Terminal already has connection.\n\n");
+    else printf("\nError: NOT FOUND\n\n");
+}
+
+Terminal * removeTerminal(Terminal * tlist, char * tname){
+    Terminal * wanted = findTerminal(tlist, tname);
+    Terminal * before = findPreviousTerminal(tlist, wanted);
+    if(wasntFound(wanted)) { //End of list
+        printf("Error: Terminal not found!\n");
+        return NULL;
+    }else if (before == NULL) { //First item
+        tlist = wanted->Next;
+    }else if(wanted->Next == NULL){ //Last item
+        before->Next == NULL;
+    }else { //Middle item
+        before->Next = wanted->Next;
+    }
+    freeTerminal(wanted);
+    return tlist;
+}
+
+void terminalFrequency(Terminal * tlist, char * place){
+    int i = 0;
+    while(tlist != NULL){
+        if(!strcmp(tlist->place,place))
+            i++;
+        tlist = tlist->Next;
+    }
+    if(i != 0)
+        printf("There are %d terminals in %s.\n", i, place);
+    else
+        printf("There are no terminals in %s.\n",place);
 }
 
 void unlinkTerminal(char * tname, Terminal * tlist) {
     Terminal * t = findTerminal(tlist, tname);
-    t->r = NULL;
-    return;
+    if(wasntFound(t))
+        printf("Error: Terminal not found!\n");
+    else
+        t->r = NULL;
 }
 
 void printTerminals(Terminal * t) {
     while(t) {
         printf("name: %s\n", t->name);
-        printf("place: %s\n", t->local);
+        printf("place: %s\n", t->place);
         t->r ? printf("\t\t %s -- %s\n", t->name, routerName(t->r)) : printf("No connection in %s\n", t->name);
         t = t->Next;
     }
