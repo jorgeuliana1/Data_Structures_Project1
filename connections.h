@@ -4,7 +4,7 @@ typedef struct connections Connect;
 
 /*
 --printRouterAndTerminal--
-Precondition: Router and terminal are inicilized.
+Precondition: Router and terminal are inicialized.
 Input: Router and terminal lists.
 Output: None.
 Postcondition: All routers and terminals are printed.

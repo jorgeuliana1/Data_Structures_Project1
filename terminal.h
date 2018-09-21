@@ -6,7 +6,7 @@ typedef struct terminal Terminal;
 --inicializeList--
 Precondition: Terminal list in not inicialized.
 Input: None.
-Output: inicilized terminal list.
+Output: inicialized terminal list.
 Postcondition: The terminal list is ready to be used.
 */
 Terminal * inicializeList();

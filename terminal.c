@@ -126,12 +126,11 @@ void unlinkTerminal(char * tname, Terminal * tlist) {
         t->r = NULL;
 }
 
-/*
 void printTerminals(Terminal * t) {
     while(t) {
         printf("name: %s\n", t->name);
         printf("place: %s\n", t->place);
         t->r ? printf("\t\t %s -- %s\n", t->name, routerName(t->r)) : printf("No connection in %s\n", t->name);
         t = t->Next;
-    }*/
+    }
 }
