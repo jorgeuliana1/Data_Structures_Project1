@@ -45,7 +45,6 @@ Router * registerRouter(Router * r, char * n, char * o) {
     }
     return newRouter;
 }
-
 //  PROBLEMATIC
 Router * removeRouter(Router * rlist, Terminal * tlist, char * rn) {
     Router * temporary = findRouter(rlist, rn);
