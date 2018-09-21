@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "readFile.h"
 //STRUCT AREA
 struct command {
   int fCode;   //Function code.

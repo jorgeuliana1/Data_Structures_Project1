@@ -36,7 +36,7 @@ Input: Router and terminal lists and router name.
 Output: List with removed router.
 Postcondition: Router is removed from the network.
 */
-Router * removeRouter(Router * r, Terminal * ter, char * rn);
+Router * removeRouter(Router * rlist, char * rn);
 
 /*
 --carrierFrequency--
