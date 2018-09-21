@@ -3,6 +3,7 @@
 #include <string.h>
 #include "terminal.h"
 #include "router.h"
+#include "connections.h"
 
 //STRUCT AREA
 struct router {
@@ -20,13 +21,8 @@ static char * adjustString(char * name){
     return space;
 }
 //END OF STATIC FUNCTIONS AREA
-
-Router * inicializeList(){
-    return NULL;
-}
-
 Router * findRouter(Router * rlist, char * name) {
-    while(rlist != NULL && strcmp(rlist->name,name)){
+    while(rlist != NULL && strcmp(rlist->name, name)){
         rlist = rlist->Next;
     }
     return rlist;
@@ -37,7 +33,6 @@ Router * registerRouter(Router * r, char * n, char * o) {
     newRouter->name = adjustString(n);
     newRouter->carrier = adjustString(o);
     newRouter->cnt = NULL;
-
     if(!r) { //If router list is empty
         newRouter->Next = NULL;
     } else { //If router list has elements
@@ -45,13 +40,18 @@ Router * registerRouter(Router * r, char * n, char * o) {
     }
     return newRouter;
 }
-//  PROBLEMATIC
-Router * removeRouter(Router * rlist, Terminal * tlist, char * rn) {
-    Router * temporary = findRouter(rlist, rn);
-    rlist->Next = temporary->Next; //what if router is first in list?
-    tlist = findTerminalbyRouter(tlist, rn); //There could be many terminals w one router
-    unlinkTerminal(tlist);
-    free(temporary); //What about its name and stuff
+
+Router * removeRouter(Router * rlist, char * rn) {
+    Router * temp = findRouter(rlist, rn);
+    if(rlist->Next != NULL)
+        rlist->Next = temp->Next;
+    while(rlist != NULL && strcmp(rlist->Next->name, rn)) {
+        rlist = rlist->Next;
+    }
+    rlist->cnt = temp->cnt;
+    free(temp->name);
+    free(temp->carrier);
+    free(temp);
     return rlist;
 }
 

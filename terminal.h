@@ -9,7 +9,7 @@ Input: None.
 Output: inicialized terminal list.
 Postcondition: The terminal list is ready to be used.
 */
-Terminal * inicializeList();
+//Terminal * inicializeList();
 
 /*
 --findTerminal--
@@ -54,7 +54,7 @@ Input: Router name, router list, terminal name, terminal list.
 Output: None.
 Postcondition: Terminal and router are linked.
 */
-void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist);
+//void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist);
 
 /*
 --unlinkTerminal--
@@ -63,7 +63,7 @@ Input: Terminal name and list.
 Output: None.
 Postcondition: Terminal doesn't have any links.
 */
-void unlinkTerminal(char * tname, Terminal * tlist);
+void unlinkTerminal(Terminal * tlist, char * tname);
 
 /*
 --terminalFrequency--
@@ -74,5 +74,7 @@ Postcondition: The number of terminals in said place printed.
 */
 void terminalFrequency(Terminal * tlist, char * place);
 
-//void printTerminals(Terminal * t);
+void printTerminals(Terminal * t);
+
+void disconnectRouter(Terminal * tlist, char * rn);
 #endif
