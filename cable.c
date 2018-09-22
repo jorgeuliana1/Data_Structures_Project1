@@ -9,16 +9,16 @@
 //END OF STATIC FUNCTIONS
 void printRouterAndTerminal(Router * r, Terminal * t) {
     if(r != NULL)
-      printRouters(r);
+        printRouters(r);
     if(t != NULL)
-      printTerminals(t);
+        printTerminals(t);
 }
 
 void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist) {
     Terminal * t = findTerminal(tlist, tname);
     Router * r = findRouter(rlist, rname);
     if(r != NULL && t != NULL) //t->r = r;
-      plugRouter(t, r);
+        plugRouter(t, r);
     else printf("\nError: NOT FOUND\n\n");
 }
 
