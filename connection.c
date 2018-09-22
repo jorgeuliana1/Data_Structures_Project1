@@ -64,6 +64,7 @@ Connect * destroyConnection(Connect * w, char * rn1, char * rn2) {
 }
 
 void printConnections(Connect * w) {
+    if(w == NULL) printf("No connections here.\n");
     while(w != NULL) {
         printf("%s -- %s\n", routerName(w->r1), routerName(w->r2));
         w = w->Next;
