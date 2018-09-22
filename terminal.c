@@ -147,3 +147,13 @@ void plugRouter(Terminal * t, void * a) {
     a = (Router *) a;
     t->r = a;
 }
+
+Terminal * decimateTerminals(Terminal * t) {
+    Terminal * temp;
+    while(t != NULL) {
+        temp = t->Next;
+        removeTerminal(t, t->name);
+        t = temp;
+    }
+    return NULL;
+}

@@ -61,6 +61,9 @@ void script1() {
     r = destroyRouter(r, t, "Router5");
     printf("\n----3----\n\n");
     printRouterAndTerminal(r, t);
+    r = decimateRouters(r);
+    t = decimateTerminals(t);
+    printRouterAndTerminal(r, t);
     return;
 }
 

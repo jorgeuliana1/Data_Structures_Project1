@@ -85,7 +85,7 @@ Terminal * disconnectRouter(Terminal * tlist, char * rn);
 
 /*
 --plugRouter--
-W A R N I N G: This function is "low level" and doesn't realize any verification.
+W A R N I N G: This function is "low level" and doesn't do any verification.
 USE CAREFULLY.
 Precondition: Terminal is inicialized and doesn't have any link.
 Input: Terminal and router to be linked.
@@ -93,4 +93,13 @@ Output: None.
 Postcondition: Terminal is linked to router.
 */
 void plugRouter(Terminal * t, void * a);
+
+/*
+--decimateTerminals--
+Precondition: Terminal list is inicialized.
+Input: Inicialized terminal list.
+Output: Empty terminal list.
+Postcondition: All the terminals are destroyed.
+*/
+Terminal * decimateTerminals(Terminal * t);
 #endif
