@@ -40,6 +40,9 @@ FILE * openReadingFile(int argv, char * argc[]) {
         f = fopen(argc[1], "r");
     else
         printf("ERROR: File not informed.\n");
+    if(f == NULL) {
+        printf("ERROR: Invalid file. Will result in SegFault.\n");
+    }
     return f;
 }
 
