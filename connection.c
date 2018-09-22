@@ -6,19 +6,19 @@
 #include "connection.h"
 //STRUCT AREA
 struct connections {
-    Router * r1;
-    Router * r2;
+    Router * r;
+    int flag;
     Connect * Next;
 };
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA
-static Connect * findConnectionByRouters(Connect * w, char * rn1, char * rn2) {
-    while(strcmp(routerName(w->r1), rn1) || strcmp(routerName(w->r2), rn2)) w = w->Next;
+static Connect * findConnectionByRouter(Connect * w, char * rn) {
+    while(strcmp(routerName(w->r), rn)) w = w->Next;
     return w;
 }
 
 static Connect * findConnectionBefore(Connect * w, Connect * w1) {
-    while(w != NULL && w->Next != NULL && (strcmp(routerName(w->Next->r1), routerName(w->r1)) || strcmp(routerName(w->Next->r2), routerName(w->r2))))
+    while(w != NULL && w->Next != NULL && strcmp(routerName(w->r), routerName(w->Next->r)))
         w = w->Next;
     return w;
 }
@@ -33,40 +33,47 @@ Connect * inicializeConnection(Connect * connect) {
     return NULL;
 }
 
-Connect * webConnectRoutersLL(Connect * w, void * rlist, char * rn1, char * rn2) {
+Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
     rlist = (Router *) rlist;
-    Router * temp1 = findRouter(rlist, rn1);
-    Router * temp2 = findRouter(rlist, rn2);
+    Router * temp = findRouter(rlist, rn);
     if(w != NULL) {
-        w = findLastConnection(w);
-        w->Next->r1 = temp1;
-        w->Next->r2 = temp2;
-        w->Next->Next = NULL;
-        w = w->Next;
+        Connect * temp1;
+        temp1 = (Connect *)malloc(sizeof(Connect));
+        temp1->r = temp;
+        temp1->flag = 0;
+        temp1->Next = NULL;
+        Connect * temp2 = findLastConnection(w);
+        temp2->Next = temp1;
     }
     if(w == NULL) {
         w = (Connect *)malloc(sizeof(Connect));
         w->Next = NULL;
-        w->r1 = temp1;
-        w->r2 = temp2;
+        w->r = temp;
+        w->flag = 0;
     }
     return w;
 }
 
-Connect * destroyConnection(Connect * w, char * rn1, char * rn2) {
-    Connect * w1 = findConnectionByRouters(w, rn1, rn2);
-    Connect * w0 = findConnectionBefore(w, w1);
-    if(w0 == NULL && w1->Next != NULL) w = w1->Next;
-    if(w0 != NULL && w1->Next != NULL) w0->Next = w1->Next;
-    if(w0 == NULL && w1->Next == NULL) w = NULL;
-    free(w1);
+Connect * destroyConnection(Connect * w, char * rn) {
+    Connect * w1 = findConnectionByRouter(w, rn);
+    if(w1 == NULL) {
+        printf("ERROR: Routers are not linked.\n");
+    } else {
+        w = w1->Next;
+        free(w1);
+    }
     return w;
 }
 
+char * routerConnected(Connect * w) {
+    return routerName(w->r);
+}
+
 void printConnections(Connect * w) {
-    if(w == NULL) printf("No connections here.\n");
-    while(w != NULL) {
-        printf("%s -- %s\n", routerName(w->r1), routerName(w->r2));
-        w = w->Next;
+    Connect * temp = w;
+    if(temp == NULL) printf("No connections here.\n");
+    while(temp != NULL) {
+        printf("%s\n", routerName(temp->r));
+        temp = temp->Next;
     }
 }

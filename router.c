@@ -123,41 +123,24 @@ Router * decimateRouters(Router * r) {
 }
 
 Router * webConnectRouters(Router * rlist, char * rn1, char * rn2) {
-    Router * temp1 = findRouter(rlist, rn1);
-    Router * temp2 = findRouter(rlist, rn2);
-    if(temp1->cnt == NULL && temp2->cnt == NULL) {
-        temp1->cnt = webConnectRoutersLL(temp1->cnt, rlist, rn1, rn2);
-        temp2->cnt = temp1->cnt;
-    }
-    else if(temp1->cnt != NULL && temp2->cnt == NULL) {
-        temp1->cnt = webConnectRoutersLL(temp1->cnt, rlist, rn1, rn2);
-        temp2->cnt = temp1->cnt;
-    }
-    else {
-        temp2->cnt = webConnectRoutersLL(temp2->cnt, rlist, rn1, rn2);
-        temp1->cnt = temp2->cnt;
-    }
+    Router * temp = findRouter(rlist, rn1);
+    temp->cnt = webConnectRouterLL(temp->cnt, rlist, rn2);
+    Router * temp1 = findRouter(rlist, rn2);
+    temp1->cnt = webConnectRouterLL(temp1->cnt, rlist, rn1);
     return rlist;
 }
 
 Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2) {
     Router * temp1 = findRouter(rlist, rn1);
     Router * temp2 = findRouter(rlist, rn2);
-    if(temp1->cnt == NULL || temp2->cnt == NULL) {
-        printf("ERROR: No connection between routers\n");
-        return rlist;
-    }
-    else {
-        temp1->cnt = destroyConnection(temp1->cnt, rn1, rn2);
-        temp2->cnt = temp1->cnt;
-        temp1->cnt = NULL;
-        temp2->cnt = NULL;
-        return rlist;
-    }
+    temp1->cnt = destroyConnection(temp1->cnt, rn2);
+    temp2->cnt = destroyConnection(temp2->cnt, rn1);
+    return rlist;
 }
 
 void PrintRouterConnections(Router * r) {
     while(r != NULL) {
+        printf("\n--Connected to %s:\n", routerName(r));
         printConnections(r->cnt);
         r = r->Next;
     }

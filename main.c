@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "connection.h"
 #include "router.h"
 #include "terminal.h"
 #include "readFile.h"
@@ -42,7 +41,7 @@ void script1() {
     t = registerTerminal(t, "Terminal10", "Viana");
     t = registerTerminal(t, "Terminal11", "Guarapari");
     t = registerTerminal(t, "Terminal12", "Fundao");
-    printf("\n----1----\n\n");
+    printf("\n----1----\n");
     printRouterAndTerminal(r, t);
     linkRouterToTerminal("Router1", r, "Terminal1", t);
     linkRouterToTerminal("Router1", r, "Terminal2", t);
@@ -56,16 +55,25 @@ void script1() {
     linkRouterToTerminal("Router5", r, "Terminal10", t);
     linkRouterToTerminal("Router3", r, "Terminal11", t);
     linkRouterToTerminal("Router4", r, "Terminal12", t);
-    printf("\n----2----\n\n");
+    printf("\n----2----\n");
     printRouterAndTerminal(r, t);
     r = destroyRouter(r, t, "Router5");
-    printf("\n----3----\n\n");
+    printf("\n----3----\n");
     printRouterAndTerminal(r, t);
-    webConnectRouters(r, "Router3", "Router4");
-    printf("\n----4----\n\n");
+    r = registerRouter(r, "Router6", "URSAL");
+    r = webConnectRouters(r, "Router3", "Router4");
+    r = webConnectRouters(r, "Router3", "Router6");
+    r = webConnectRouters(r, "Router1", "Router6");
+    r = webConnectRouters(r, "Router4", "Router6");
+    printf("\n----4----\n");
     PrintRouterConnections(r);
-    webDisconnectRouters(r, "Router3", "Router4");
-    printf("\n----5----\n\n");
+    r = webDisconnectRouters(r, "Router3", "Router4");
+    printf("\n----5----\n");
+    PrintRouterConnections(r);
+    r = webDisconnectRouters(r, "Router3", "Router6");
+    r = webDisconnectRouters(r, "Router1", "Router6");
+    r = webDisconnectRouters(r, "Router4", "Router6");
+    printf("\n----6----\n");
     PrintRouterConnections(r);
     r = decimateRouters(r);
     t = decimateTerminals(t);
