@@ -13,8 +13,7 @@ void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal *
     Terminal * t = findTerminal(tlist, tname);
     Router * r = findRouter(rlist, rname);
     if(r != NULL && t != NULL) //t->r = r;
-      insertRouterHere(t, r);
-      //Deveria linkar o roteador ao terminal aqui, que pena...
+      plugRouter(t, r);
     else printf("\nError: NOT FOUND\n\n");
 }
 

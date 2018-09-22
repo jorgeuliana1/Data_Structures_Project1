@@ -143,7 +143,7 @@ void printTerminals(Terminal * t) {
     }
 }
 
-void insertRouterHere(Terminal * t, void * a) {
+void plugRouter(Terminal * t, void * a) {
     a = (Router *) a;
     t->r = a;
 }

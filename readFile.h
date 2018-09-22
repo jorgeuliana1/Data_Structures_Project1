@@ -11,6 +11,7 @@ Output: Inicialized FILE.
 Postcondition: FILE is inicilized.
 */
 FILE * openReadingFile(int argv, char * argc[]);
+
 /*
 --readCommand--
 Precondition: FILE is inicialized and Command is not inicialized.
@@ -19,6 +20,7 @@ Output: Command is inicilized and filled with a whole command line from the inpu
 Postcondition: Command is ready to use.
 */
 Command * readCommand(FILE * f);
+
 /*
 --destroyCommand--
 Precondition: Command is inicialized and filled.
@@ -27,6 +29,7 @@ Output: Not inicialized Command.
 Postcondition: Command is not inicialized.
 */
 Command * destroyCommand(Command * c);
+
 /*
 --closeReadingFile--
 Precondition: FILE is inicialized.
@@ -35,6 +38,7 @@ Output: None.
 Postcondition: FILE is not inicialized.
 */
 void closeReadingFile(FILE * f);
+
 /*
 --getArgument--
 Precondition: Command is inicialized and filled.
@@ -43,6 +47,7 @@ Output: String with argument.
 Postcondition: Same as precondition.
 */
 char * getArgument(Command * c, int n);
+
 /*
 --getHeader--
 Precondition: Command is inicialized and filled.

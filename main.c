@@ -7,6 +7,7 @@
 #include "lib.h"
 
 void script1() {
+  //TESTING SCRIPT
   Router * r = inicializeRouters();
   Terminal * t = inicializeTerminals();
   r = registerRouter(r, "Router1", "Vivo");
