@@ -64,4 +64,13 @@ Output: None.
 Postcondition: Routers info is printed.
 */
 void printRouters(Router * r);
+
+/*
+--decimateRouters--
+Precondition: Router list is inicialized.
+Input: Inicialized router list.
+Output: Empty router list.
+Postcondition: All the routers are destroyed.
+*/
+Router * decimateRouters(Router * r);
 #endif

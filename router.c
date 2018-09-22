@@ -111,3 +111,13 @@ char * routerName(Router * r) {
     if(r != NULL) return r->name;
     else return NULL;
 }
+
+Router * decimateRouters(Router * r) {
+    Router * temp;
+    while(r != NULL) {
+        temp = r->Next;
+        removeRouter(r, r->name);
+        r = temp;
+    }
+    return NULL;
+}
