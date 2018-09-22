@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "connections.h"
+#include "connection.h"
 #include "router.h"
 #include "terminal.h"
 #include "readFile.h"
-#include "lib.h"
+#include "cable.h"
 
 void script2(int argv, char * argc[]) {
     printf("\n");
@@ -61,6 +61,12 @@ void script1() {
     r = destroyRouter(r, t, "Router5");
     printf("\n----3----\n\n");
     printRouterAndTerminal(r, t);
+    webConnectRouters(r, "Router3", "Router4");
+    printf("\n----4----\n\n");
+    PrintRouterConnections(r);
+    webDisconnectRouters(r, "Router3", "Router4");
+    printf("\n----5----\n\n");
+    PrintRouterConnections(r);
     r = decimateRouters(r);
     t = decimateTerminals(t);
     printRouterAndTerminal(r, t);
@@ -69,6 +75,6 @@ void script1() {
 
 int main(int argv, char* argc[]) {
     script1();
-    script2(argv, argc);
+    //script2(argv, argc);
     return 0;
 }

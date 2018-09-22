@@ -1,5 +1,5 @@
-#ifndef LIB_H
-#define LIB_H
+#ifndef CABLE_H
+#define CABLE_H
 /*
 --printRouterAndTerminal--
 Precondition: Router and terminal are inicilized.
