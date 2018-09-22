@@ -21,6 +21,9 @@ static char * adjustString(char * name){
     return space;
 }
 //END OF STATIC FUNCTIONS AREA
+Router * inicializeRouters() {
+    return NULL;
+}
 Router * findRouter(Router * rlist, char * name) {
     while(rlist != NULL && strcmp(rlist->name, name)){
         rlist = rlist->Next;
@@ -33,7 +36,7 @@ Router * registerRouter(Router * r, char * n, char * o) {
     newRouter->name = adjustString(n);
     newRouter->carrier = adjustString(o);
     newRouter->cnt = NULL;
-    if(!r) { //If router list is empty
+    if(r == NULL) { //If router list is empty
         newRouter->Next = NULL;
     } else { //If router list has elements
         newRouter->Next = r;
@@ -67,7 +70,7 @@ void carrierFrequency(Router * rlist, char * carrier){
 }
 
 void printRouters(Router * r) {
-    while(r){
+    while(r != NULL){
         printf("name: %s\n", r->name);
         printf("carrier: %s\n\n", r->carrier);
         r = r->Next;
@@ -75,5 +78,6 @@ void printRouters(Router * r) {
 }
 
 char * routerName(Router * r) {
-    return r->name;
+    if(r != NULL) return r->name;
+    else return NULL;
 }

@@ -2,15 +2,7 @@
 #define ROUTER_H
 typedef struct router Router;
 
-/*
---inicializeList--
-Precondition: Router list in not inicialized.
-Input: None.
-Output: inicialized Router list.
-Postcondition: The Router list is ready to be used.
-*/
-Router * inicializeList();
-
+Router * inicializeRouters();
 /*
 --findRouter--
 Precondition: Router list is inicialized and with at least a element inside.

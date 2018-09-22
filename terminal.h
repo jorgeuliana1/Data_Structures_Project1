@@ -9,7 +9,7 @@ Input: None.
 Output: inicialized terminal list.
 Postcondition: The terminal list is ready to be used.
 */
-//Terminal * inicializeList();
+Terminal * inicializeTerminals();
 
 /*
 --findTerminal--
@@ -48,15 +48,6 @@ Postcondition: Terminal is removed from the network.
 Terminal * removeTerminal(Terminal * tlist, char * tname);
 
 /*
---linkRouterToTerminal--
-Precondition: Router and terminal are not linked.
-Input: Router name, router list, terminal name, terminal list.
-Output: None.
-Postcondition: Terminal and router are linked.
-*/
-//void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist);
-
-/*
 --unlinkTerminal--
 Precondition: Terminal is linked to a router.
 Input: Terminal name and list.
@@ -77,4 +68,5 @@ void terminalFrequency(Terminal * tlist, char * place);
 void printTerminals(Terminal * t);
 
 void disconnectRouter(Terminal * tlist, char * rn);
+void insertRouterHere(Terminal * t, void * a);
 #endif

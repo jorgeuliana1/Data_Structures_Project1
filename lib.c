@@ -3,15 +3,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 void printRouterAndTerminal(Router * r, Terminal * t) {
-    printRouters(r);
-    printTerminals(t);
+    if(r != NULL)
+      printRouters(r);
+    if(t != NULL)
+      printTerminals(t);
 }
 
 void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist) {
     Terminal * t = findTerminal(tlist, tname);
     Router * r = findRouter(rlist, rname);
     if(r != NULL && t != NULL) //t->r = r;
-      printf("Jorge\n");
+      insertRouterHere(t, r);
+      //Deveria linkar o roteador ao terminal aqui, que pena...
     else printf("\nError: NOT FOUND\n\n");
 }
 
