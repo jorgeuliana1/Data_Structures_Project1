@@ -3,13 +3,13 @@
 typedef struct terminal Terminal;
 
 /*
---inicializeList--
+--inicializeTerminals--
 Precondition: Terminal list in not inicialized.
 Input: None.
 Output: inicialized terminal list.
 Postcondition: The terminal list is ready to be used.
 */
-//Terminal * inicializeList();
+Terminal * inicializeTerminals();
 
 /*
 --findTerminal--
@@ -32,7 +32,7 @@ Terminal * findTerminalbyRouter(Terminal * t, char * rn);
 /*
 --registerTerminal--
 Precondition: Terminal * t is not inicialized.
-Input: Not inicialized terminal, terminal name and terminal location name.
+Input: Inicialized terminal, terminal name and terminal location name.
 Output: Updated terminal list.
 Postcondition: Terminsl is inicialized and on the list.
 */
@@ -48,18 +48,9 @@ Postcondition: Terminal is removed from the network.
 Terminal * removeTerminal(Terminal * tlist, char * tname);
 
 /*
---linkRouterToTerminal--
-Precondition: Router and terminal are not linked.
-Input: Router name, router list, terminal name, terminal list.
-Output: None.
-Postcondition: Terminal and router are linked.
-*/
-//void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist);
-
-/*
 --unlinkTerminal--
 Precondition: Terminal is linked to a router.
-Input: Terminal name and list.
+Input: Terminal list and name.
 Output: None.
 Postcondition: Terminal doesn't have any links.
 */
@@ -74,7 +65,32 @@ Postcondition: The number of terminals in said place printed.
 */
 void terminalFrequency(Terminal * tlist, char * place);
 
+/*
+--printTerminals--
+Precondition: Terminal is inicilized.
+Input: Terminal list.
+Output: None.
+Postcondition: Terminal list info is printed.
+*/
 void printTerminals(Terminal * t);
 
-void disconnectRouter(Terminal * tlist, char * rn);
+/*
+--disconnectRouter--
+Precondition: Terminal is linked to a router.
+Input: Terminal list and name.
+Output: None.
+Postcondition: Terminal doesn't have any links.
+*/
+Terminal * disconnectRouter(Terminal * tlist, char * rn);
+
+/*
+--plugRouter--
+W A R N I N G: This function is "low level" and doesn't realize any verification.
+USE CAREFULLY.
+Precondition: Terminal is inicialized and doesn't have any link.
+Input: Terminal and router to be linked.
+Output: None.
+Postcondition: Terminal is linked to router.
+*/
+void plugRouter(Terminal * t, void * a);
 #endif

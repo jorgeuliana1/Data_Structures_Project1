@@ -3,13 +3,13 @@
 typedef struct router Router;
 
 /*
---inicializeList--
-Precondition: Router list in not inicialized.
-Input: None.
-Output: inicialized Router list.
-Postcondition: The Router list is ready to be used.
+--inicializeRouter--
+Precondition: Router is not inicilized.
+Input: Not inicialized router.
+Output: Inicialized router.
+Postcondition: Router inicilized.
 */
-Router * inicializeList();
+Router * inicializeRouters();
 
 /*
 --findRouter--
@@ -56,6 +56,12 @@ Postcondition: None.
 */
 char * routerName(Router * r);
 
-
+/*
+--printRouters--
+Precondition: Router list is inicialized.
+Input: Inicialized Router.
+Output: None.
+Postcondition: Routers info is printed.
+*/
 void printRouters(Router * r);
 #endif

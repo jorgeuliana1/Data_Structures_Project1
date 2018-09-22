@@ -3,19 +3,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 void printRouterAndTerminal(Router * r, Terminal * t) {
-    printRouters(r);
-    printTerminals(t);
+    if(r != NULL)
+      printRouters(r);
+    if(t != NULL)
+      printTerminals(t);
 }
 
 void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist) {
     Terminal * t = findTerminal(tlist, tname);
     Router * r = findRouter(rlist, rname);
     if(r != NULL && t != NULL) //t->r = r;
-      printf("Jorge\n");
+      plugRouter(t, r);
     else printf("\nError: NOT FOUND\n\n");
 }
 
-void destroyRouter(Router * r, Terminal * t, char * rn) {
-    disconnectRouter(t, rn);
+Router * destroyRouter(Router * r, Terminal * t, char * rn) {
+    t = disconnectRouter(t, rn);
     r = removeRouter(r, rn);
 }

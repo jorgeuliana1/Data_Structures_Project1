@@ -18,5 +18,12 @@ Postcondition: Terminal and router are linked.
 */
 void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist);
 
-void destroyRouter(Router * r, Terminal * t, char * rn);
+/*
+--destroyRouter--
+Precondition: Router and Terminal are linked.
+Input: Router list, router name, terminal list, terminal name.
+Output: None.
+Postcondition: Terminal and router are no more linked.
+*/
+Router * destroyRouter(Router * r, Terminal * t, char * rn);
 #endif

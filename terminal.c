@@ -51,9 +51,9 @@ static Terminal * findPreviousTerminal(Terminal * t, Terminal * tw) {
 }
 //END OF STATIC FUNCTIONS AREA
 
-//Terminal * inicializeList(){
-//    return NULL;
-//}
+Terminal * inicializeTerminals() {
+    return NULL;
+}
 
 Terminal * findTerminal(Terminal * tlist, char * name) {
     while(tlist != NULL && strcmp(tlist->name, name)) {
@@ -63,8 +63,12 @@ Terminal * findTerminal(Terminal * tlist, char * name) {
 }
 
 Terminal * findTerminalbyRouter(Terminal * t, char * rn) {
-    while(t != NULL && strcmp(routerName(t->r), rn)) {
-        t = t->Next;
+    while(t != NULL) {
+      if(t->r != NULL) {
+        if(strcmp(routerName(t->r),rn)) {
+          t = t->Next;
+        } else return t;
+      } else t = t->Next;
     }
     return t;
 }
@@ -82,19 +86,6 @@ Terminal * registerTerminal(Terminal * t, char * n, char * l) {
     }
     return newTerminal;
 }
-
-/*
-void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal * tlist) {
-    Terminal * t = findTerminal(tlist, tname);
-    Router * r = findRouter(rlist, rname);
-    if(r != NULL && t != NULL)
-        if(t->r != NULL)
-            t->r = r;
-        else
-            printf("\nError: Terminal already has connection.\n\n");
-    else printf("\nError: NOT FOUND\n\n");
-}
-*/
 
 Terminal * removeTerminal(Terminal * tlist, char * tname){
     Terminal * wanted = findTerminal(tlist, tname);
@@ -134,12 +125,13 @@ void unlinkTerminal(Terminal * tlist, char * tname) {
         t->r = NULL;
 }
 
-void disconnectRouter(Terminal * tlist, char * rn) {
+Terminal * disconnectRouter(Terminal * tlist, char * rn) {
     Terminal * t = tlist;
     while(t != NULL) {
         t = findTerminalbyRouter(tlist, rn);
-        if(strcmp(routerName(t->r), rn)) unlinkTerminal(t, t->name);
+        if(t != NULL && !strcmp(routerName(t->r), rn)) unlinkTerminal(tlist, t->name);
     }
+    return t;
 }
 
 void printTerminals(Terminal * t) {
@@ -149,4 +141,9 @@ void printTerminals(Terminal * t) {
         t->r ? printf("\t\t %s -- %s\n", t->name, routerName(t->r)) : printf("No connection in %s\n", t->name);
         t = t->Next;
     }
+}
+
+void plugRouter(Terminal * t, void * a) {
+    a = (Router *) a;
+    t->r = a;
 }
