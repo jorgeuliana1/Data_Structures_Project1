@@ -157,3 +157,7 @@ Terminal * decimateTerminals(Terminal * t) {
     }
     return NULL;
 }
+
+char * terminalName(Terminal * t) {
+    return t->name;
+}
