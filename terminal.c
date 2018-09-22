@@ -63,8 +63,12 @@ Terminal * findTerminal(Terminal * tlist, char * name) {
 }
 
 Terminal * findTerminalbyRouter(Terminal * t, char * rn) {
-    while(t != NULL && strcmp(routerName(t->r), rn)) {
-        t = t->Next;
+    while(t != NULL) {
+      if(t->r != NULL) {
+        if(strcmp(routerName(t->r),rn)) {
+          t = t->Next;
+        } else return t;
+      } else t = t->Next;
     }
     return t;
 }
@@ -121,12 +125,13 @@ void unlinkTerminal(Terminal * tlist, char * tname) {
         t->r = NULL;
 }
 
-void disconnectRouter(Terminal * tlist, char * rn) {
-    Terminal * t;
-    while(tlist != NULL) {
+Terminal * disconnectRouter(Terminal * tlist, char * rn) {
+    Terminal * t = tlist;
+    while(t != NULL) {
         t = findTerminalbyRouter(tlist, rn);
-        if(strcmp(routerName(t->r), rn)) unlinkTerminal(tlist, t->name);
+        if(t != NULL && !strcmp(routerName(t->r), rn)) unlinkTerminal(tlist, t->name);
     }
+    return t;
 }
 
 void printTerminals(Terminal * t) {

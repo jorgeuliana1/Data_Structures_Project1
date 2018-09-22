@@ -18,7 +18,7 @@ void linkRouterToTerminal(char * rname, Router * rlist, char * tname, Terminal *
     else printf("\nError: NOT FOUND\n\n");
 }
 
-void destroyRouter(Router * r, Terminal * t, char * rn) {
-    disconnectRouter(t, rn);
+Router * destroyRouter(Router * r, Terminal * t, char * rn) {
+    t = disconnectRouter(t, rn);
     r = removeRouter(r, rn);
 }

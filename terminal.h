@@ -67,6 +67,6 @@ void terminalFrequency(Terminal * tlist, char * place);
 
 void printTerminals(Terminal * t);
 
-void disconnectRouter(Terminal * tlist, char * rn);
+Terminal * disconnectRouter(Terminal * tlist, char * rn);
 void insertRouterHere(Terminal * t, void * a);
 #endif

@@ -13,12 +13,36 @@ struct router {
     Router * Next;
 };
 //END OF STRUCT AREA
-
 //STATIC FUNCTIONS AREA
 static char * adjustString(char * name){
     char * space = (char *)malloc(strlen(name)*sizeof(char)+1);
     strcpy(space, name);
     return space;
+}
+
+static Router * findPreviousRouter(Router * r, Router * rw) {
+    while(r != NULL && r->Next != rw) {
+        r = r->Next;
+    }
+    return r;
+}
+
+static int isFirst(Router * r, Router * rw) {
+    Router * temp = findPreviousRouter(r, rw);
+    if(temp == NULL && rw->Next != NULL) return 1;
+    else return 0;
+}
+
+static int isMiddle(Router * r, Router * rw) {
+    Router * temp = findPreviousRouter(r, rw);
+    if(temp != NULL && rw->Next != NULL) return 1;
+    else return 0;
+}
+
+static int isLast(Router * r, Router * rw) {
+    Router * temp = findPreviousRouter(r, rw);
+    if(temp != NULL && rw->Next == NULL) return 1;
+    else return 0;
 }
 //END OF STATIC FUNCTIONS AREA
 Router * inicializeRouters() {
@@ -46,10 +70,16 @@ Router * registerRouter(Router * r, char * n, char * o) {
 
 Router * removeRouter(Router * rlist, char * rn) {
     Router * temp = findRouter(rlist, rn);
-    if(rlist->Next != NULL)
+    if(isLast(rlist, temp)) {
+        rlist = findPreviousRouter(rlist, temp);
+        rlist->Next = NULL;
+    }
+    else if(isMiddle(rlist, temp)) {
+        rlist = findPreviousRouter(rlist, temp);
         rlist->Next = temp->Next;
-    while(rlist != NULL && strcmp(rlist->Next->name, rn)) {
-        rlist = rlist->Next;
+    }
+    else if(isFirst(rlist, temp)) {
+        rlist = temp->Next;
     }
     rlist->cnt = temp->cnt;
     free(temp->name);
