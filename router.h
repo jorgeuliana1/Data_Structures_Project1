@@ -73,4 +73,10 @@ Output: Empty router list.
 Postcondition: All the routers are destroyed.
 */
 Router * decimateRouters(Router * r);
+
+Router * webConnectRouters(Router * rlist, char * rn1, char * rn2);
+
+Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2);
+
+void PrintRouterConnections(Router * r);
 #endif

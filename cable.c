@@ -1,7 +1,12 @@
-#include "router.h"
-#include "terminal.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "router.h"
+#include "terminal.h"
+#include "connection.h"
+//STATIC FUNCTIONS AREA
+
+
+//END OF STATIC FUNCTIONS
 void printRouterAndTerminal(Router * r, Terminal * t) {
     if(r != NULL)
       printRouters(r);
