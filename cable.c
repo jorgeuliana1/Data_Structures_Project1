@@ -30,5 +30,8 @@ Router * destroyRouter(Router * r, Terminal * t, char * rn) {
 int enviadados (char * n1, char * n2, Terminal * tlist, Router * rlist){
     Terminal * t1 = findTerminal(tlist, n1);
     Terminal * t2 = findTerminal(tlist, n2);
-    
+    Router * r1 = t1->r; //find router by terminal
+    Router * r2 = t1->r; //find router by terminal
+     
+    //check every connect list in rlist until find the router from the other router i guess im not sure anymore
 }
