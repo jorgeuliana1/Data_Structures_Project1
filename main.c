@@ -9,13 +9,13 @@ void script2(int argv, char * argc[]) {
     printf("\n");
     FILE * f = openReadingFile(argv, argc);
     Command * c = readCommand(f);
-    c = destroyCommand(c);
-    c = readCommand(f);
-    char * str2 = getArgument(c, 0);
-    char * str3 = getArgument(c, 1);
-    char * str = getHeader(c);
-    printf("%s %s %s\n", str, str2, str3);
-    destroyCommand(c);
+    Router * rlist = inicializeRouters();
+    Terminal * tlist = inicializeTerminals();
+    do{   
+        translateCode(c, rlist, tlist);
+        c = readCommand(f);   
+    } while(!endOfFile(c));
+    
     closeReadingFile(f);
     return;
 }

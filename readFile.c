@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "router.h"
+#include "terminal.h"
 #include "readFile.h"
+#include "cable.h"
+
 //STRUCT AREA
 struct command {
   int fCode;   //Function code.
@@ -10,6 +14,52 @@ struct command {
 };
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA
+
+void * translateCode(Command * c, Router * rlist, Terminal * tlist) {
+    switch(c->fCode){
+        case 1:
+            rlist = registerRouter(rlist, getArgument(c, 0), getArgument(c, 1));
+            break;
+        case 2:
+            tlist = registerTerminal(tlist, getArgument(c, 0), getArgument(c, 1));
+            break;
+        case 3:
+            rlist = removeRouter(rlist, getArgument(c, 0));
+            break;
+        case 4:
+            linkRouterToTerminal(getArgument(c, 1), rlist, getArgument(c, 0), tlist);
+            break;    
+        case 5:
+            unlinkTerminal(tlist, getArgument(c, 0));
+            break;
+        case 6:
+            tlist = removeTerminal(tlist, getArgument(c, 0));
+            break;    
+        case 7:
+            rlist = webConnectRouters(rlist, getArgument(c, 0), getArgument(c, 1));
+            break;
+        case 8:
+            rlist = webDisconnectRouters(rlist, getArgument(c, 0), getArgument(c, 1));
+            break;
+        case 9:
+            terminalFrequency(tlist, getArgument(c, 0));
+            break;
+        case 10:
+            carrierFrequency(rlist, getArgument(c, 0));
+            break;
+        case 11:
+            //en viadados
+            break;
+        case 12:
+            //imprimenet
+            break;            
+        case 13:
+            //fim
+            break;                        
+    }
+}
+
+
 static int functionCode(char * f) {
     if(!strcmp("CADASTRAROTEADOR", f)) return 1;
     else if(!strcmp("CADASTRATERMINAL", f)) return 2;
@@ -26,6 +76,7 @@ static int functionCode(char * f) {
     else if(!strcmp("FIM", f)) return 13;
     else return 0;
 }
+
 static int numArgs(int n) {
     if(n == 12 || n == 13) return 0;
     else if(n == 1 || n == 4 || n == 7 || n == 8 || n == 11) return 2;
@@ -44,6 +95,10 @@ FILE * openReadingFile(int argv, char * argc[]) {
         printf("ERROR: Invalid file. Will result in SegFault.\n");
     }
     return f;
+}
+
+int endOfFile(Command * c){
+    return c->fCode == 13;
 }
 
 Command * readCommand(FILE * f) {

@@ -26,3 +26,9 @@ Router * destroyRouter(Router * r, Terminal * t, char * rn) {
     t = disconnectRouter(t, rn);
     r = removeRouter(r, rn);
 }
+
+int enviadados (char * n1, char * n2, Terminal * tlist, Router * rlist){
+    Terminal * t1 = findTerminal(tlist, n1);
+    Terminal * t2 = findTerminal(tlist, n2);
+    
+}

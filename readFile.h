@@ -57,4 +57,7 @@ Postcondition: Same as precondition.
 */
 char * getHeader(Command * c);
 
+void * translateCode(Command * c, Router * rlist, Terminal * tlist);
+
+int endOfFile(Command * c);
 #endif
