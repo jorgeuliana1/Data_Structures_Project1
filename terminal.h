@@ -1,5 +1,6 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
+#include "router.h"
 typedef struct terminal Terminal;
 
 /*
@@ -83,16 +84,7 @@ Postcondition: Terminal doesn't have any links.
 */
 Terminal * disconnectRouter(Terminal * tlist, char * rn);
 
-/*
---plugRouter--
-W A R N I N G: This function is "low level" and doesn't do any verification.
-USE CAREFULLY.
-Precondition: Terminal is inicialized and doesn't have any link.
-Input: Terminal and router to be linked.
-Output: None.
-Postcondition: Terminal is linked to router.
-*/
-void plugRouter(Terminal * t, void * a);
+void linkRouterToTerminal(Router * rlist, char * rname, Terminal * tlist, char * tname);
 
 /*
 --decimateTerminals--
@@ -102,4 +94,12 @@ Output: Empty terminal list.
 Postcondition: All the terminals are destroyed.
 */
 Terminal * decimateTerminals(Terminal * t);
+
+char * terminalName(Terminal * t);
+
+char * connectedRouterName(Terminal * t);
+
+int thereIsTRConnection(Terminal * t);
+
+Terminal * nextTerminal(Terminal * t);
 #endif

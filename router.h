@@ -1,5 +1,7 @@
 #ifndef ROUTER_H
 #define ROUTER_H
+#include "connection.h"
+
 typedef struct router Router;
 
 /*
@@ -79,4 +81,15 @@ Router * webConnectRouters(Router * rlist, char * rn1, char * rn2);
 Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2);
 
 void PrintRouterConnections(Router * r);
+
+int thereIsRRConnection(Router * r);
+
+Connect * getCNT(Router * r);
+
+Router * nextRouter(Router * r);
+
+void flagConnection(Router * r, char * r1n, char * r2n);
+
+void unflagAll(Router * r);
+
 #endif

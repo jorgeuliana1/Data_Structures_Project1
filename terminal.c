@@ -143,9 +143,11 @@ void printTerminals(Terminal * t) {
     }
 }
 
-void plugRouter(Terminal * t, void * a) {
-    a = (Router *) a;
-    t->r = a;
+void linkRouterToTerminal(Router * rlist, char * rname, Terminal * tlist, char * tname) {
+    Terminal * t = findTerminal(tlist, tname);
+    Router * r = findRouter(rlist, rname);
+    if(r != NULL && t != NULL) t->r = r;
+    else printf("\nError: NOT FOUND\n\n");
 }
 
 Terminal * decimateTerminals(Terminal * t) {
@@ -160,4 +162,17 @@ Terminal * decimateTerminals(Terminal * t) {
 
 char * terminalName(Terminal * t) {
     return t->name;
+}
+
+char * connectedRouterName(Terminal * t) {
+    return routerName(t->r);
+}
+
+int thereIsTRConnection(Terminal * t) {
+    if(t->r == NULL) return 0;
+    else return 1;
+}
+
+Terminal * nextTerminal(Terminal * t) {
+    return t->Next;
 }

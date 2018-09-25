@@ -26,6 +26,7 @@ static int functionCode(char * f) {
     else if(!strcmp("FIM", f)) return 13;
     else return 0;
 }
+
 static int numArgs(int n) {
     if(n == 12 || n == 13) return 0;
     else if(n == 1 || n == 4 || n == 7 || n == 8 || n == 11) return 2;
