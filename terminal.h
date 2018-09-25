@@ -1,6 +1,6 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
-typedef struct terminal Terminal;
+typedef struct termlist TermList;
 
 /*
 --inicializeTerminals--
@@ -9,7 +9,7 @@ Input: None.
 Output: inicialized terminal list.
 Postcondition: The terminal list is ready to be used.
 */
-Terminal * inicializeTerminals();
+TermList * inicializeTerminals();
 
 /*
 --findTerminal--
@@ -18,7 +18,7 @@ Input: Terminal list and the searched teminal's name.
 Output: Terminal with said name.
 Postcondition: None.
 */
-Terminal * findTerminal(Terminal * tlist, char * name);
+Terminal * findTerminal(TermList * tlist, char * name);
 
 /*
 --findTerminalbyRouter--
@@ -31,21 +31,21 @@ Terminal * findTerminalbyRouter(Terminal * t, char * rn);
 
 /*
 --registerTerminal--
-Precondition: Terminal * t is not inicialized.
-Input: Inicialized terminal, terminal name and terminal location name.
-Output: Updated terminal list.
-Postcondition: Terminsl is inicialized and on the list.
+Precondition: TermList is inicialized.
+Input: Terminal list, terminal name and terminal location name.
+Output: None.
+Postcondition: Terminal is inicialized and on the list.
 */
-Terminal * registerTerminal(Terminal * t, char * n, char * l);
+void registerTerminal(TermList * t, char * n, char * l);
 
 /*
 --removeTerminal--
 Precondition: Terminal is inicialized.
 Input: Terminal list and terminal name.
-Output: The list.
+Output: None.
 Postcondition: Terminal is removed from the network.
 */
-Terminal * removeTerminal(Terminal * tlist, char * tname);
+void removeTerminal(TermList * tlist, char * tname);
 
 /*
 --unlinkTerminal--
@@ -54,7 +54,7 @@ Input: Terminal list and name.
 Output: None.
 Postcondition: Terminal doesn't have any links.
 */
-void unlinkTerminal(Terminal * tlist, char * tname);
+void unlinkTerminal(TermList * tlist, char * tname);
 
 /*
 --terminalFrequency--
@@ -63,7 +63,7 @@ Input: Terminal list and name of the place.
 Output: None.
 Postcondition: The number of terminals in said place printed.
 */
-void terminalFrequency(Terminal * tlist, char * place);
+void terminalFrequency(TermList * tlist, char * place);
 
 /*
 --printTerminals--
@@ -98,8 +98,8 @@ void plugRouter(Terminal * t, void * a);
 --decimateTerminals--
 Precondition: Terminal list is inicialized.
 Input: Inicialized terminal list.
-Output: Empty terminal list.
+Output: None.
 Postcondition: All the terminals are destroyed.
 */
-Terminal * decimateTerminals(Terminal * t);
+void decimateTerminals(TermList * t);
 #endif

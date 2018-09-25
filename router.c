@@ -12,6 +12,12 @@ struct router {
     Connect * cnt;
     Router * Next;
 };
+
+typedef struct routlist {
+    Router * first;
+    Router * last;
+}RoutList;
+
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA
 static char * adjustString(char * name){
@@ -45,47 +51,49 @@ static int isLast(Router * r, Router * rw) {
     else return 0;
 }
 //END OF STATIC FUNCTIONS AREA
-Router * inicializeRouters() {
-    return NULL;
+RoutList * inicializeRouters() {
+    RoutList * list = (RoutList *)malloc(sizeof(RoutList));
+    list->first = NULL;
+    list->last = NULL;
+    return list;
 }
-Router * findRouter(Router * rlist, char * name) {
-    while(rlist != NULL && strcmp(rlist->name, name)){
-        rlist = rlist->Next;
+
+Router * findRouter(RoutList * rlist, char * name) {
+    Router * aux = rlist->first;
+    while(aux != NULL && strcmp(aux->name, name)){
+        aux = aux->Next;
     }
     return rlist;
 }
 
-Router * registerRouter(Router * r, char * n, char * o) {
+void registerRouter(RoutList * rlist, char * n, char * o) {
     Router * newRouter = (Router *)malloc(sizeof(Router));
     newRouter->name = adjustString(n);
     newRouter->carrier = adjustString(o);
     newRouter->cnt = NULL;
-    if(r == NULL) { //If router list is empty
+    
+    if(rlist->first == NULL) { //If router list is empty
         newRouter->Next = NULL;
+        rlist->last = rlist->first = newRouter;
     } else { //If router list has elements
-        newRouter->Next = r;
+        newRouter->Next = rlist->first;
+        rlist->first = newRouter;
     }
-    return newRouter;
 }
 
-Router * removeRouter(Router * rlist, char * rn) {
-    Router * temp = findRouter(rlist, rn);
-    if(isLast(rlist, temp)) {
-        rlist = findPreviousRouter(rlist, temp);
-        rlist->Next = NULL;
+void removeRouter(RoutList * rlist, char * rn) {
+    Router * wanted = findRouter(rlist, rn);
+    Router * before = findPreviousRouter(rlist, wanted);
+    if(before == NULL) { //First
+        rlist->first = wanted->Next;
     }
-    else if(isMiddle(rlist, temp)) {
-        rlist = findPreviousRouter(rlist, temp);
-        rlist->Next = temp->Next;
+    else if(wanted->Next == NULL) { //Last
+        rlist->last = NULL;
     }
-    else if(isFirst(rlist, temp)) {
-        rlist = temp->Next;
+    else { //Middle
+        before->Next = wanted->Next;
     }
-    rlist->cnt = temp->cnt;
-    free(temp->name);
-    free(temp->carrier);
-    free(temp);
-    return rlist;
+    //free connects
 }
 
 void carrierFrequency(Router * rlist, char * carrier){
