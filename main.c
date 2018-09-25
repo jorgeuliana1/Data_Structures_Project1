@@ -6,6 +6,7 @@
 #include "cable.h"
 
 void script2(int argv, char * argc[]) {
+    /*
     printf("\n");
     FILE * f = openReadingFile(argv, argc);
     Command * c = readCommand(f);
@@ -18,6 +19,7 @@ void script2(int argv, char * argc[]) {
     destroyCommand(c);
     closeReadingFile(f);
     return;
+    */
 }
 
 void script1() {
@@ -43,18 +45,18 @@ void script1() {
     t = registerTerminal(t, "Terminal12", "Fundao");
     printf("\n----1----\n");
     printRouterAndTerminal(r, t);
-    linkRouterToTerminal("Router1", r, "Terminal1", t);
-    linkRouterToTerminal("Router1", r, "Terminal2", t);
-    linkRouterToTerminal("Router1", r, "Terminal3", t);
-    linkRouterToTerminal("Router1", r, "Terminal4", t);
-    linkRouterToTerminal("Router1", r, "Terminal5", t);
-    linkRouterToTerminal("Router2", r, "Terminal6", t);
-    linkRouterToTerminal("Router2", r, "Terminal7", t);
-    linkRouterToTerminal("Router3", r, "Terminal8", t);
-    linkRouterToTerminal("Router4", r, "Terminal9", t);
-    linkRouterToTerminal("Router5", r, "Terminal10", t);
-    linkRouterToTerminal("Router3", r, "Terminal11", t);
-    linkRouterToTerminal("Router4", r, "Terminal12", t);
+    linkRouterToTerminal(r, "Router1", t, "Terminal1");
+    linkRouterToTerminal(r, "Router1", t, "Terminal2");
+    linkRouterToTerminal(r, "Router1", t, "Terminal3");
+    linkRouterToTerminal(r, "Router1", t, "Terminal4");
+    linkRouterToTerminal(r, "Router1", t, "Terminal5");
+    linkRouterToTerminal(r, "Router2", t, "Terminal6");
+    linkRouterToTerminal(r, "Router2", t, "Terminal7");
+    linkRouterToTerminal(r, "Router3", t, "Terminal8");
+    linkRouterToTerminal(r, "Router4", t, "Terminal9");
+    linkRouterToTerminal(r, "Router5", t, "Terminal10");
+    linkRouterToTerminal(r, "Router3", t, "Terminal11");
+    linkRouterToTerminal(r, "Router4", t, "Terminal12");
     printf("\n----2----\n");
     printRouterAndTerminal(r, t);
     r = destroyRouter(r, t, "Router5");
