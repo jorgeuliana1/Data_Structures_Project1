@@ -4,6 +4,7 @@
 #include "terminal.h"
 #include "readFile.h"
 #include "cable.h"
+#include "dot.h"
 
 void script2(int argv, char * argc[]) {
     /*
@@ -72,6 +73,7 @@ void script1() {
     r = webDisconnectRouters(r, "Router3", "Router4");
     printf("\n----5----\n");
     PrintRouterConnections(r);
+    createDot(t, r);
     r = webDisconnectRouters(r, "Router3", "Router6");
     r = webDisconnectRouters(r, "Router1", "Router6");
     r = webDisconnectRouters(r, "Router4", "Router6");

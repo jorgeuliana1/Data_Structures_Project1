@@ -145,3 +145,49 @@ void PrintRouterConnections(Router * r) {
         r = r->Next;
     }
 }
+
+int thereIsRRConnection(Router * r) {
+    if(r->cnt != NULL) return 1;
+    else return 0;
+}
+
+Connect * getCNT(Router * r) {
+    return r->cnt;
+}
+
+Router * nextRouter(Router * r) {
+    return r->Next;
+}
+
+void flagConnection(Router * r, char * r1n, char * r2n) {
+    Router * aux = findRouter(r, r1n);
+    Connect * auxc;
+    if(aux != NULL) {
+        if(thereIsRRConnection(aux)) {
+            auxc = findConnectionByRouter(getCNT(aux), r2n);
+            auxc = flag(auxc);
+        }
+        aux = findRouter(r, r2n);
+        if(aux != NULL) {
+            if(thereIsRRConnection(aux)) {
+                auxc = findConnectionByRouter(getCNT(aux), r1n);
+                auxc = flag(auxc);
+            }
+        }
+    }
+    return;
+}
+
+void unflagAll(Router * r) {
+    Router * aux = r;
+    Connect * c;
+    while(aux != NULL) {
+        c = getCNT(aux);
+        while(c != NULL) {
+            unflag(c);
+            c = nextCNT(c);
+        }
+        aux = aux->Next;
+    }
+    return;
+}

@@ -163,3 +163,16 @@ Terminal * decimateTerminals(Terminal * t) {
 char * terminalName(Terminal * t) {
     return t->name;
 }
+
+char * connectedRouterName(Terminal * t) {
+    return routerName(t->r);
+}
+
+int thereIsTRConnection(Terminal * t) {
+    if(t->r == NULL) return 0;
+    else return 1;
+}
+
+Terminal * nextTerminal(Terminal * t) {
+    return t->Next;
+}

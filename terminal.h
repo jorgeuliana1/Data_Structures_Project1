@@ -94,4 +94,12 @@ Output: Empty terminal list.
 Postcondition: All the terminals are destroyed.
 */
 Terminal * decimateTerminals(Terminal * t);
+
+char * terminalName(Terminal * t);
+
+char * connectedRouterName(Terminal * t);
+
+int thereIsTRConnection(Terminal * t);
+
+Terminal * nextTerminal(Terminal * t);
 #endif

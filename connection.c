@@ -12,11 +12,6 @@ struct connections {
 };
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA
-static Connect * findConnectionByRouter(Connect * w, char * rn) {
-    while(strcmp(routerName(w->r), rn)) w = w->Next;
-    return w;
-}
-
 static Connect * findConnectionBefore(Connect * w, Connect * w1) {
     while(w != NULL && w->Next != NULL && strcmp(routerName(w->r), routerName(w->Next->r)))
         w = w->Next;
@@ -76,4 +71,29 @@ void printConnections(Connect * w) {
         printf("%s\n", routerName(temp->r));
         temp = temp->Next;
     }
+}
+
+Connect * nextCNT(Connect * w) {
+    return w->Next;
+}
+
+char * cntRouterName(Connect * w) {
+    return routerName(w->r);
+}
+
+Connect * flag(Connect * c) {
+    c->flag = 1;
+}
+
+Connect * unflag(Connect * c) {
+    c->flag = 0;
+}
+
+int isFlagged(Connect * c) {
+    return c->flag;
+}
+
+Connect * findConnectionByRouter(Connect * w, char * rn) {
+    while(strcmp(routerName(w->r), rn)) w = w->Next;
+    return w;
 }
