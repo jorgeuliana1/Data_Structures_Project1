@@ -55,7 +55,12 @@ Router * findRouter(Router * rlist, char * name) {
     return rlist;
 }
 
-Router * registerRouter(Router * r, char * n, char * o) {
+Router * registerRouter(Router * r, char * n, char * o, FILE * l) {
+    Router * aux = findRouter(r, n);
+    if(aux != NULL) {
+        fprintf(l, "ERROR: %s can't be registered, there's a router with the same name.\n\n", n);
+        return r;
+    }
     Router * newRouter = (Router *)malloc(sizeof(Router));
     newRouter->name = adjustString(n);
     newRouter->carrier = adjustString(o);
@@ -68,10 +73,10 @@ Router * registerRouter(Router * r, char * n, char * o) {
     return newRouter;
 }
 
-Router * removeRouter(Router * rlist, char * rn) {
+Router * removeRouter(Router * rlist, char * rn, FILE * l) {
     Router * temp = findRouter(rlist, rn);
     if(temp == NULL) {
-        printf("It wasn't possible to remove that router because it doesn't exist.\n");
+        fprintf(l, "ERROR: It wasn't possible to remove %s router because it doesn't exist.\n\n", rn);
         return rlist;
     }
     if(isLast(rlist, temp)) {
@@ -92,15 +97,14 @@ Router * removeRouter(Router * rlist, char * rn) {
     return rlist;
 }
 
-void carrierFrequency(Router * rlist, char * carrier){
+void carrierFrequency(Router * rlist, char * carrier, FILE * o){
     int i = 0;
     while(rlist != NULL){
         if(!strcmp(rlist->carrier,carrier))
             i++;
         rlist = rlist->Next;
     }
-    i ? printf("There are %d routers from '%s'.\n", i, carrier) :
-    printf("There are no routers from '%s'.\n", carrier);
+    fprintf(o, "CARRIERFREQUENCY %s: %d\n\n", carrier, i);
 }
 
 void printRouters(Router * r) {
@@ -117,26 +121,46 @@ char * routerName(Router * r) {
 }
 
 Router * decimateRouters(Router * r) {
+    FILE * logfile = fopen("a.txt", "a");
     Router * temp;
     while(r != NULL) {
         temp = r->Next;
-        removeRouter(r, r->name);
+        removeRouter(r, r->name, logfile);
         r = temp;
     }
+    fclose(logfile);
     return NULL;
 }
 
-Router * webConnectRouters(Router * rlist, char * rn1, char * rn2) {
+Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l) {
     Router * temp = findRouter(rlist, rn1);
-    temp->cnt = webConnectRouterLL(temp->cnt, rlist, rn2);
     Router * temp1 = findRouter(rlist, rn2);
+    if(temp == NULL || temp1 == NULL) {
+        if(temp == NULL) {
+            fprintf(l, "ERROR: %s can't be connected, there isn't a router with this name.\n\n", rn1);
+        }
+        if(temp1 == NULL) {
+            fprintf(l, "ERROR: %s can't be connected, there isn't a router with this name.\n\n", rn2);
+        }
+        return rlist;
+    }
+    temp->cnt = webConnectRouterLL(temp->cnt, rlist, rn2);
     temp1->cnt = webConnectRouterLL(temp1->cnt, rlist, rn1);
     return rlist;
 }
 
-Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2) {
+Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l) {
     Router * temp1 = findRouter(rlist, rn1);
     Router * temp2 = findRouter(rlist, rn2);
+    if(temp1 == NULL || temp2 == NULL) {
+        if(temp1 == NULL) {
+            fprintf(l, "ERROR: %s can't be disconnected, there isn't a router with this name.\n\n", rn1);
+        }
+        if(temp2 == NULL) {
+            fprintf(l, "ERROR: %s can't be disconnected, there isn't a router with this name.\n\n", rn2);
+        }
+        return rlist;
+    }
     temp1->cnt = destroyConnection(temp1->cnt, rn2);
     temp2->cnt = destroyConnection(temp2->cnt, rn1);
     return rlist;

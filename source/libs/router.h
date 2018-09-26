@@ -29,7 +29,7 @@ Input: Not inicialized router, router name and router carrier name.
 Output: Updated router list.
 Postcondition: Router is inicialized and on the list.
 */
-Router * registerRouter(Router * r, char * n, char * o);
+Router * registerRouter(Router * r, char * n, char * o, FILE * l);
 
 /*
 --removeRouter--
@@ -38,7 +38,7 @@ Input: Router and terminal lists and router name.
 Output: List with removed router.
 Postcondition: Router is removed from the network.
 */
-Router * removeRouter(Router * rlist, char * rn);
+Router * removeRouter(Router * rlist, char * rn, FILE * l);
 
 /*
 --carrierFrequency--
@@ -47,7 +47,7 @@ Input: Router list and name of the carrier.
 Output: None.
 Postcondition: The number of routers from said carrier.
 */
-void carrierFrequency(Router * rlist, char * carrier);
+void carrierFrequency(Router * rlist, char * carrier, FILE * o);
 
 /*
 --routerName--
@@ -76,9 +76,9 @@ Postcondition: All the routers are destroyed.
 */
 Router * decimateRouters(Router * r);
 
-Router * webConnectRouters(Router * rlist, char * rn1, char * rn2);
+Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l);
 
-Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2);
+Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l);
 
 void PrintRouterConnections(Router * r);
 
