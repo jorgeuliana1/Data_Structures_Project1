@@ -37,7 +37,7 @@ Input: Inicialized terminal, terminal name and terminal location name.
 Output: Updated terminal list.
 Postcondition: Terminsl is inicialized and on the list.
 */
-Terminal * registerTerminal(Terminal * t, char * n, char * l);
+Terminal * registerTerminal(Terminal * t, char * n, char * l, FILE * lf);
 
 /*
 --removeTerminal--
@@ -46,7 +46,7 @@ Input: Terminal list and terminal name.
 Output: The list.
 Postcondition: Terminal is removed from the network.
 */
-Terminal * removeTerminal(Terminal * tlist, char * tname);
+Terminal * removeTerminal(Terminal * tlist, char * tname, FILE * l);
 
 /*
 --unlinkTerminal--
@@ -55,7 +55,7 @@ Input: Terminal list and name.
 Output: None.
 Postcondition: Terminal doesn't have any links.
 */
-void unlinkTerminal(Terminal * tlist, char * tname);
+void unlinkTerminal(Terminal * tlist, char * tname, FILE * l);
 
 /*
 --terminalFrequency--
@@ -64,7 +64,7 @@ Input: Terminal list and name of the place.
 Output: None.
 Postcondition: The number of terminals in said place printed.
 */
-void terminalFrequency(Terminal * tlist, char * place);
+void terminalFrequency(Terminal * tlist, char * place, FILE * o);
 
 /*
 --printTerminals--
@@ -84,7 +84,7 @@ Postcondition: Terminal doesn't have any links.
 */
 Terminal * disconnectRouter(Terminal * tlist, char * rn);
 
-void linkRouterToTerminal(Router * rlist, char * rname, Terminal * tlist, char * tname);
+void linkRouterToTerminal(Router * rlist, char * rname, Terminal * tlist, char * tname, FILE * l);
 
 /*
 --decimateTerminals--

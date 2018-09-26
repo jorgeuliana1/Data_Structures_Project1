@@ -6,8 +6,10 @@
 #include "readFile.h"
 #include "dot.h"
 //STATIC FUNCTIONS AREA
-
-
+static Router * destroyRouter(Router * r, Terminal * t, char * rn, FILE * logfile) {
+    t = disconnectRouter(t, rn);
+    r = removeRouter(r, rn, logfile);
+}
 //END OF STATIC FUNCTIONS
 void printRouterAndTerminal(Router * r, Terminal * t) {
     if(r != NULL)
@@ -16,16 +18,14 @@ void printRouterAndTerminal(Router * r, Terminal * t) {
         printTerminals(t);
 }
 
-Router * destroyRouter(Router * r, Terminal * t, char * rn) {
-    t = disconnectRouter(t, rn);
-    r = removeRouter(r, rn);
-}
-
 void executeScript(FILE * f) {
     int i = 1;
     Command * c;
     Router * r = inicializeRouters();
     Terminal * t = inicializeTerminals();
+    //ERROR FILE
+    FILE * logFile = fopen("log.txt", "w");
+    FILE * output = fopen("saida.txt", "w");
     int id;
     char * str1;
     char * str2;
@@ -33,68 +33,61 @@ void executeScript(FILE * f) {
     while(i) {
         c = readCommand(f);
         id = getFID(c);
-        //DEBUGGING
-        char * str1 = getArgument(c, 0);
-        char * str2 = getArgument(c, 1);
-        char * str3= getHeader(c);
-        printf("%s %s %s\n", str3, str1, str2);
-        printf("function\n");
-        //END OF DEBUGGING
         switch(id) {
             case 1:
                 //REGISTERROUTER
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                r = registerRouter(r, str1, str2);
+                r = registerRouter(r, str1, str2, logFile);
                 break;
             case 2:
                 //REGISTERTERMINAL
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                t = registerTerminal(t, str1, str2);
+                t = registerTerminal(t, str1, str2, logFile);
                 break;
             case 3:
                 //REMOVEROUTER
                 str1 = getArgument(c, 0);
-                r = removeRouter(r, str1);
+                r = destroyRouter(r, t, str1, logFile);
                 break;
             case 4:
                 //CONNECTTERMINAL
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                linkRouterToTerminal(r, str2, t, str1);
+                linkRouterToTerminal(r, str2, t, str1, logFile);
                 break;
             case 5:
                 //DISCONNECTTERMINAL
                 str1 = getArgument(c, 0);
-                unlinkTerminal(t, str1);
+                unlinkTerminal(t, str1, logFile);
                 break;
             case 6:
                 //REMOVETERMINAL
                 str1 = getArgument(c, 0);
-                t = removeTerminal(t, str1);
+                t = removeTerminal(t, str1, logFile);
                 break;
             case 7:
                 //CONNECTROUTERS
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                r = webConnectRouters(r, str1, str2);
+                r = webConnectRouters(r, str1, str2, logFile);
                 break;
             case 8:
                 //DISCONNECTROUTERS
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                r = webDisconnectRouters(r, str1, str2);
+                r = webDisconnectRouters(r, str1, str2, logFile);
                 break;
             case 9:
                 //TERMINALFREQUENCY
                 str1 = getArgument(c, 0);
-                terminalFrequency(t, str1);
+                terminalFrequency(t, str1, output);
                 break;
             case 10:
                 //CARRIERFREQUENCY
                 str1 = getArgument(c, 0);
-                carrierFrequency(r, str1);
+                carrierFrequency(r, str1, output);
                 break;
             case 11:
                 //SENDDATAPACKAGE
@@ -105,11 +98,14 @@ void executeScript(FILE * f) {
                 createDot(t, r);
                 break;
             case 13:
+                //FIM
                 i = 0;
                 break;
         }
         c = destroyCommand(c);
     }
+    fclose(logFile);
+    fclose(output);
     r = decimateRouters(r);
     t = decimateTerminals(t);
     return;
