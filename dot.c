@@ -17,21 +17,28 @@ void createDot(Terminal * t, Router * r) {
     FILE * f = openGVFile();
     fprintf(f, "strict graph {\n");
     Terminal * auxt = t;
+    Router * auxr = r;
     fprintf(f, "\tsubgraph clusterA {\n");
-    fprintf(f, "\t\tlabel = \"Terminais\";\n");
+    fprintf(f, "\t\tlabel = \"Terminals\";\n");
     while(auxt != NULL) {
         fprintf(f, "\t\t%s;\n", terminalName(auxt));
         auxt = nextTerminal(auxt);
     }
     fprintf(f, "\t}\n");
-    auxt = t;
-    Router * auxr = r;
-    Connect * auxc;
+
     fprintf(f, "\tsubgraph clusterB {\n");
-    fprintf(f, "\t\tlabel = \"Roteadores\";\n");
+    fprintf(f, "\t\tlabel = \"Routers\";\n");
+    while(auxr != NULL) {
+        fprintf(f, "\t\t%s;\n", routerName(auxr));
+        auxr = nextRouter(auxr);
+    }
+    auxt = t;
+    auxr = r;
+    Connect * auxc;
+    fprintf(f, "\t}\n");
     while(auxt != NULL) {
         if(thereIsTRConnection(auxt))
-            fprintf(f, "\t\t%s -- %s;\n", terminalName(auxt), connectedRouterName(auxt));
+            fprintf(f, "\t%s -- %s;\n", terminalName(auxt), connectedRouterName(auxt));
         auxt = nextTerminal(auxt);
     }
     while(auxr != NULL) {
@@ -39,7 +46,7 @@ void createDot(Terminal * t, Router * r) {
             auxc = getCNT(auxr);
             while(auxc != NULL) {
                 if(!isFlagged(auxc))
-                    fprintf(f, "\t\t%s -- %s\n", routerName(auxr), cntRouterName(auxc));
+                    fprintf(f, "\t%s -- %s\n", routerName(auxr), cntRouterName(auxc));
                 flagConnection(r, routerName(auxr), cntRouterName(auxc));
                 auxc = nextCNT(auxc);
             }
@@ -47,7 +54,6 @@ void createDot(Terminal * t, Router * r) {
         auxr = nextRouter(auxr);
     }
     unflagAll(r);
-    fprintf(f, "\t}\n");
     fprintf(f, "}");
     f = closeGVFile(f);
 }

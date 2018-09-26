@@ -6,6 +6,12 @@
 #include "cable.h"
 #include "dot.h"
 
+void script3(int argv, char * argc[]) {
+    FILE * f = openReadingFile(argv, argc);
+    executeScript(f);
+    closeReadingFile(f);
+}
+
 void script2(int argv, char * argc[]) {
     /*
     printf("\n");
@@ -86,7 +92,8 @@ void script1() {
 }
 
 int main(int argv, char* argc[]) {
-    script1();
+    //script1();
     //script2(argv, argc);
+    script3(argv, argc);
     return 0;
 }

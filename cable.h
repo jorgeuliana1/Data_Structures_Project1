@@ -19,4 +19,6 @@ Postcondition: Terminal and router are no more linked.
 Router * destroyRouter(Router * r, Terminal * t, char * rn);
 
 int sendDataPackage(Terminal * t, char * ori, char * des);
+
+void executeScript(FILE * f);
 #endif

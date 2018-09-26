@@ -57,4 +57,6 @@ Postcondition: Same as precondition.
 */
 char * getHeader(Command * c);
 
+int getFID(Command * c);
+
 #endif
