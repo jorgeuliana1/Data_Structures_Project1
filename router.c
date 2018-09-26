@@ -70,6 +70,10 @@ Router * registerRouter(Router * r, char * n, char * o) {
 
 Router * removeRouter(Router * rlist, char * rn) {
     Router * temp = findRouter(rlist, rn);
+    if(temp == NULL) {
+        printf("It wasn't possible to remove that router because it doesn't exist.\n");
+        return rlist;
+    }
     if(isLast(rlist, temp)) {
         rlist = findPreviousRouter(rlist, temp);
         rlist->Next = NULL;

@@ -29,7 +29,7 @@ static int functionCode(char * f) {
 
 static int numArgs(int n) {
     if(n == 12 || n == 13) return 0;
-    else if(n == 1 || n == 4 || n == 7 || n == 8 || n == 11) return 2;
+    else if(n == 1 || n ==  2 || n == 4 || n == 7 || n == 8 || n == 11) return 2;
     else if(n == 0) return -1;
     else return 1;
 }
@@ -96,5 +96,9 @@ char * getArgument(Command * c, int n) {
 
 char * getHeader(Command * c) {
     return c->h;
+}
+
+int getFID(Command * c) {
+    return c->fCode;
 }
 //END OF FUNCTIONS AREA
