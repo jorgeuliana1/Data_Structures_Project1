@@ -11,25 +11,29 @@ static Router * destroyRouter(Router * r, Terminal * t, char * rn, FILE * logfil
     r = removeRouter(r, rn, logfile);
 }
 //END OF STATIC FUNCTIONS
-void printRouterAndTerminal(Router * r, Terminal * t) {
-    if(r != NULL)
-        printRouters(r);
-    if(t != NULL)
-        printTerminals(t);
+FILE * startLogFile() {
+    FILE * logFile = fopen("log.txt", "w");
 }
 
-void executeScript(FILE * f) {
+FILE * startOutputFile() {
+    FILE * output = fopen("saida.txt", "w");
+}
+
+FILE * closeFile(FILE * a) {
+    fclose(a);
+    return NULL;
+}
+
+void runScript(FILE * f, FILE * logFile, FILE * output) {
     int i = 1;
     Command * c;
+    FILE * gv = openGVFile();
     Router * r = inicializeRouters();
     Terminal * t = inicializeTerminals();
     //ERROR FILE
-    FILE * logFile = fopen("log.txt", "w");
-    FILE * output = fopen("saida.txt", "w");
     int id;
     char * str1;
     char * str2;
-    char * str3;
     while(i) {
         c = readCommand(f);
         id = getFID(c);
@@ -95,7 +99,7 @@ void executeScript(FILE * f) {
                 break;
             case 12:
                 //PRINTNETMAP
-                createDot(t, r);
+                createDot(t, r, gv);
                 break;
             case 13:
                 //FIM
@@ -104,9 +108,8 @@ void executeScript(FILE * f) {
         }
         c = destroyCommand(c);
     }
-    fclose(logFile);
-    fclose(output);
     r = decimateRouters(r);
     t = decimateTerminals(t);
+    gv = closeFile(gv);
     return;
 }

@@ -12,7 +12,7 @@ struct connections {
 };
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA
-static Connect * findConnectionBefore(Connect * w, Connect * w1) {
+static Connect * findPreviousConnection(Connect * w, Connect * w1) {
     while(w != NULL && w->Next != NULL && strcmp(routerName(w->r), routerName(w->Next->r)))
         w = w->Next;
     return w;
@@ -30,17 +30,20 @@ Connect * inicializeConnection(Connect * connect) {
 
 Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
     rlist = (Router *) rlist;
+    //Casting
     Router * temp = findRouter(rlist, rn);
+    //Encontra roteador
     if(w != NULL) {
+        //Caso não esteja vazia a lista de conexões
         Connect * temp1;
         temp1 = (Connect *)malloc(sizeof(Connect));
+        //Aloca espaço pra conexão
         temp1->r = temp;
         temp1->flag = 0;
         temp1->Next = NULL;
         Connect * temp2 = findLastConnection(w);
         temp2->Next = temp1;
-    }
-    if(w == NULL) {
+    } else {
         w = (Connect *)malloc(sizeof(Connect));
         w->Next = NULL;
         w->r = temp;
