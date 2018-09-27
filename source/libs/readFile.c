@@ -35,14 +35,14 @@ static int numArgs(int n) {
 }
 //END OF STATIC FUNCTIONS AREA
 //FUNCTIONS AREA
-FILE * openReadingFile(int argv, char * argc[]) {
+FILE * openReadingFile(int argv, char * argc[], FILE * l) {
     FILE * f;
     if(argv > 1)
         f = fopen(argc[1], "r");
     else
-        printf("ERROR: File not informed.\n");
+        fprintf(l, "I/O ERROR: File not informed.\n\n");
     if(f == NULL) {
-        printf("ERROR: Invalid file. Will result in SegFault.\n");
+        fprintf(l, "I/O ERROR: Invalid file. Will result in SegFault.\n\n");
     }
     return f;
 }
@@ -79,15 +79,10 @@ Command * destroyCommand(Command * c) {
     return NULL;
 }
 
-void closeReadingFile(FILE * f) {
-    fclose(f);
-    return;
-}
-
 char * getArgument(Command * c, int n) {
     if(n > numArgs(c->fCode) - 1) {
         printf("ERROR: Argument does not exist.\n");
-        return "Error";
+        return "(error)";
     }
     else {
         return c->args[n];

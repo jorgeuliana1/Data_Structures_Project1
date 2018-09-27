@@ -10,7 +10,7 @@ Input: Number of strings of the input and the strings given in the input.
 Output: Inicialized FILE.
 Postcondition: FILE is inicilized.
 */
-FILE * openReadingFile(int argv, char * argc[]);
+FILE * openReadingFile(int argv, char * argc[], FILE * l);
 
 /*
 --readCommand--

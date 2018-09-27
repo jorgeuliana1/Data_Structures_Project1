@@ -121,7 +121,7 @@ char * routerName(Router * r) {
 }
 
 Router * decimateRouters(Router * r) {
-    FILE * logfile = fopen("a.txt", "a");
+    FILE * logfile = fopen("eLog.txt", "a");
     Router * temp;
     while(r != NULL) {
         temp = r->Next;

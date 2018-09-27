@@ -3,21 +3,21 @@
 #include "router.h"
 #include "terminal.h"
 //STATIC FUNTIONS AREA
+
+//END OF STATIC FUNCTIONS AREA
 FILE * openGVFile() {
     FILE * f = fopen("saida.dot", "w");
     return f;
 }
 
-FILE * closeGVFile(FILE * f) {
-    fclose(f);
-    return f;
-}
-//END OF STATIC FUNCTIONS AREA
-void createDot(Terminal * t, Router * r) {
-    FILE * f = openGVFile();
+void createDot(Terminal * t, Router * r, FILE * f) {
+    static int counter = 0;
+    counter++;
+    if(counter > 1) fprintf(f, "//intermediario\n\n");
     fprintf(f, "strict graph {\n");
     Terminal * auxt = t;
     Router * auxr = r;
+    //Cluster
     fprintf(f, "\tsubgraph clusterA {\n");
     fprintf(f, "\t\tlabel = \"Terminals\";\n");
     while(auxt != NULL) {
@@ -34,8 +34,9 @@ void createDot(Terminal * t, Router * r) {
     }
     auxt = t;
     auxr = r;
-    Connect * auxc;
     fprintf(f, "\t}\n");
+    //End of Cluster
+    Connect * auxc;
     while(auxt != NULL) {
         if(thereIsTRConnection(auxt))
             fprintf(f, "\t%s -- %s;\n", terminalName(auxt), connectedRouterName(auxt));
@@ -54,6 +55,5 @@ void createDot(Terminal * t, Router * r) {
         auxr = nextRouter(auxr);
     }
     unflagAll(r);
-    fprintf(f, "}");
-    f = closeGVFile(f);
+    fprintf(f, "}\n");
 }
