@@ -9,8 +9,6 @@ test:
 		@gcc source/main.c source/libs/*.c -o outputs/output5/NetMap
 		@gcc source/main.c source/libs/*.c -o outputs/outputespecial/NetMap
 		@echo compiled all
-		@cd outputs/outputespecial && ./NetMap ../../inputs/input1_2.txt && cd ../../
-		@echo testespecial done
 		@cd outputs/output1 && ./NetMap ../../inputs/input1.txt && cd ../../
 		@echo test1 done
 		@cd outputs/output2 && ./NetMap ../../inputs/input2.txt && cd ../../
