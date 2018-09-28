@@ -8,9 +8,18 @@
 //STATIC FUNCTIONS AREA
 static Router * destroyRouter(Router * r, Terminal * t, char * rn, FILE * logfile) {
     t = disconnectRouter(t, rn);
+    Router * auxr = findRouter(r, rn);
+    Connect * auxc;
+    if(auxr != NULL && thereIsRRConnection(auxr)) {
+        auxc = getCNT(auxr);
+        while(auxc != NULL) {
+            webDisconnectRouters(r, rn, cntRouterName(auxc), NULL, 0);
+            auxc = nextCNT(auxc);
+        }
+    }
     r = removeRouter(r, rn, logfile);
 }
-//END OF STATIC FUNCTIONS
+//END OF STATIC FUNCTIONS AREA
 FILE * startLogFile() {
     FILE * logFile = fopen("log.txt", "w");
 }
@@ -75,13 +84,13 @@ void runScript(FILE * f, FILE * logFile, FILE * output) {
                 //CONNECTROUTERS
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                r = webConnectRouters(r, str1, str2, logFile);
+                r = webConnectRouters(r, str1, str2, logFile, 1);
                 break;
             case 8:
                 //DISCONNECTROUTERS
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                r = webDisconnectRouters(r, str1, str2, logFile);
+                r = webDisconnectRouters(r, str1, str2, logFile, 1);
                 break;
             case 9:
                 //TERMINALFREQUENCY
@@ -102,7 +111,7 @@ void runScript(FILE * f, FILE * logFile, FILE * output) {
                 createDot(t, r, gv);
                 break;
             case 13:
-                //FIM
+                //END
                 i = 0;
                 break;
         }

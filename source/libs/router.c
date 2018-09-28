@@ -132,46 +132,40 @@ Router * decimateRouters(Router * r) {
     return NULL;
 }
 
-Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l) {
-    Router * temp = findRouter(rlist, rn1);
-    Router * temp1 = findRouter(rlist, rn2);
-    if(temp == NULL || temp1 == NULL) {
-        if(temp == NULL) {
-            fprintf(l, "ERROR: %s can't be connected, there isn't a router with this name.\n\n", rn1);
-        }
-        if(temp1 == NULL) {
-            fprintf(l, "ERROR: %s can't be connected, there isn't a router with this name.\n\n", rn2);
+Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, int veriFile) {
+    Router * r1 = findRouter(rlist, rn1);
+    Router * r2 = findRouter(rlist, rn2);
+    if(r1 == NULL || r2 == NULL) {
+        if(veriFile) {
+            if(r1 == NULL) {
+                fprintf(l, "ERROR: %s can't be connected, there isn't a router with this name.\n\n", rn1);
+            }
+            if(r2 == NULL) {
+                fprintf(l, "ERROR: %s can't be connected, there isn't a router with this name.\n\n", rn2);
+            }
         }
         return rlist;
     }
-    temp->cnt = webConnectRouterLL(temp->cnt, rlist, rn2);
-    temp1->cnt = webConnectRouterLL(temp1->cnt, rlist, rn1);
+    r1->cnt = webConnectRouterLL(r1->cnt, rlist, rn2);
+    r2->cnt = webConnectRouterLL(r2->cnt, rlist, rn1);
     return rlist;
 }
 
-Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l) {
+Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, int veriFile) {
     Router * temp1 = findRouter(rlist, rn1);
     Router * temp2 = findRouter(rlist, rn2);
     if(temp1 == NULL || temp2 == NULL) {
         if(temp1 == NULL) {
-            fprintf(l, "ERROR: %s can't be disconnected, there isn't a router with this name.\n\n", rn1);
+            if(veriFile) fprintf(l, "ERROR: %s can't be disconnected, there isn't a router with this name.\n\n", rn1);
         }
         if(temp2 == NULL) {
-            fprintf(l, "ERROR: %s can't be disconnected, there isn't a router with this name.\n\n", rn2);
+            if(veriFile) fprintf(l, "ERROR: %s can't be disconnected, there isn't a router with this name.\n\n", rn2);
         }
         return rlist;
     }
     temp1->cnt = destroyConnection(temp1->cnt, rn2);
     temp2->cnt = destroyConnection(temp2->cnt, rn1);
     return rlist;
-}
-
-void PrintRouterConnections(Router * r) {
-    while(r != NULL) {
-        printf("\n--Connected to %s:\n", routerName(r));
-        printConnections(r->cnt);
-        r = r->Next;
-    }
 }
 
 int thereIsRRConnection(Router * r) {

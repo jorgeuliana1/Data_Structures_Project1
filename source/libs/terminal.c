@@ -20,16 +20,6 @@ static char * adjustString(char * name){
     return space;
 }
 
-static void printTerminalLinks(Terminal * tlist) {
-    Terminal * t = tlist;
-    while(t != NULL) {
-      if(t->r != NULL)
-        printf("%s --- %s\n", t->name, routerName(t->r));
-      t = t->Next;
-    }
-    return;
-}
-
 static void freeTerminal(Terminal * t){
     free(t->name);
     free(t->place);
@@ -136,15 +126,6 @@ Terminal * disconnectRouter(Terminal * tlist, char * rn) {
     }
     fclose(logfile);
     return t;
-}
-
-void printTerminals(Terminal * t) {
-    while(t) {
-        printf("name: %s\n", t->name);
-        printf("place: %s\n", t->place);
-        t->r ? printf("\t\t %s -- %s\n", t->name, routerName(t->r)) : printf("No connection in %s\n", t->name);
-        t = t->Next;
-    }
 }
 
 void linkRouterToTerminal(Router * rlist, char * rname, Terminal * tlist, char * tname, FILE * l) {

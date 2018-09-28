@@ -32,8 +32,6 @@ Connect * destroyConnection(Connect * w, char * rn);
 
 char * routerConnected(Connect * w);
 
-void printConnections(Connect * w);
-
 Connect * nextCNT(Connect * w);
 
 char * cntRouterName(Connect * w);
