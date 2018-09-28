@@ -12,10 +12,18 @@ struct connections {
 };
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA
-static Connect * findPreviousConnection(Connect * w, Connect * w1) {
-    while(w != NULL && w->Next != NULL && strcmp(routerName(w->r), routerName(w->Next->r)))
-        w = w->Next;
-    return w;
+static Connect * findPreviousConnection(Connect * origin, Connect * target) {
+    Connect * aux = origin;
+    //Start of "While"
+    while(aux != NULL &&
+    aux->Next != NULL &&
+    target != NULL &&
+    strcmp(routerName(target->r), routerName(aux->Next->r)))
+        aux = aux->Next;
+    //End of "While"
+    if(aux->Next != NULL && !strcmp(routerName(target->r), routerName(aux->Next->r)))
+        return aux;
+    else return NULL;
 }
 
 static Connect * findLastConnection(Connect * w) {
@@ -30,14 +38,10 @@ Connect * inicializeConnection(Connect * connect) {
 
 Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
     rlist = (Router *) rlist;
-    //Casting
     Router * temp = findRouter(rlist, rn);
-    //Encontra roteador
     if(w != NULL) {
-        //Caso não esteja vazia a lista de conexões
         Connect * temp1;
         temp1 = (Connect *)malloc(sizeof(Connect));
-        //Aloca espaço pra conexão
         temp1->r = temp;
         temp1->flag = 0;
         temp1->Next = NULL;
@@ -57,7 +61,9 @@ Connect * destroyConnection(Connect * w, char * rn) {
     if(w1 == NULL) {
         printf("ERROR: Routers are not linked.\n");
     } else {
-        w = w1->Next;
+        Connect * w2 = findPreviousConnection(w, w1);
+        if(w2 != NULL) w2->Next = w1->Next;
+        else w = w1->Next;
         free(w1);
     }
     return w;
@@ -65,15 +71,6 @@ Connect * destroyConnection(Connect * w, char * rn) {
 
 char * routerConnected(Connect * w) {
     return routerName(w->r);
-}
-
-void printConnections(Connect * w) {
-    Connect * temp = w;
-    if(temp == NULL) printf("No connections here.\n");
-    while(temp != NULL) {
-        printf("%s\n", routerName(temp->r));
-        temp = temp->Next;
-    }
 }
 
 Connect * nextCNT(Connect * w) {

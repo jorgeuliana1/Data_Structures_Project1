@@ -67,15 +67,6 @@ Postcondition: The number of terminals in said place printed.
 void terminalFrequency(Terminal * tlist, char * place, FILE * o);
 
 /*
---printTerminals--
-Precondition: Terminal is inicilized.
-Input: Terminal list.
-Output: None.
-Postcondition: Terminal list info is printed.
-*/
-void printTerminals(Terminal * t);
-
-/*
 --disconnectRouter--
 Precondition: Terminal is linked to a router.
 Input: Terminal list and name.

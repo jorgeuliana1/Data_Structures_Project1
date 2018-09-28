@@ -76,11 +76,9 @@ Postcondition: All the routers are destroyed.
 */
 Router * decimateRouters(Router * r);
 
-Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l);
+Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, int veriFile);
 
-Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l);
-
-void PrintRouterConnections(Router * r);
+Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, int veriFile);
 
 int thereIsRRConnection(Router * r);
 
