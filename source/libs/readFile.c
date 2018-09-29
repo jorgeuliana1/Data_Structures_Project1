@@ -2,6 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "readFile.h"
+#define FALSE 0
+#define TRUE 1
+
 //STRUCT AREA
 struct command {
   int fCode;   //Function code.

@@ -17,21 +17,6 @@ void createDot(Terminal * t, Router * r, FILE * f) {
     fprintf(f, "strict graph {\n");
     Terminal * auxt = t;
     Router * auxr = r;
-    //Cluster
-    /*
-    while(auxt != NULL) {
-        fprintf(f, "\t%s;\n", terminalName(auxt));
-        auxt = nextTerminal(auxt);
-    }
-
-    while(auxr != NULL) {
-        fprintf(f, "\t%s;\n", routerName(auxr));
-        auxr = nextRouter(auxr);
-    }
-    auxt = t;
-    auxr = r;
-    */
-    //End of Cluster
     Connect * auxc;
     while(auxt != NULL) {
         if(thereIsTRConnection(auxt))

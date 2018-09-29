@@ -5,6 +5,8 @@
 #include "connection.h"
 #include "readFile.h"
 #include "dot.h"
+#define FALSE 0
+#define TRUE 1
 //STATIC FUNCTIONS AREA
 static Router * destroyRouter(Router * r, Terminal * t, char * rn, FILE * logfile) {
     t = disconnectRouter(t, rn);
@@ -13,11 +15,11 @@ static Router * destroyRouter(Router * r, Terminal * t, char * rn, FILE * logfil
     if(auxr != NULL && thereIsRRConnection(auxr)) {
         auxc = getCNT(auxr);
         while(auxc != NULL) {
-            webDisconnectRouters(r, rn, cntRouterName(auxc), NULL, 0);
+            auxr = webDisconnectRouters(r, rn, cntRouterName(auxc), NULL, FALSE);
             auxc = nextCNT(auxc);
         }
     }
-    r = removeRouter(r, rn, logfile);
+    r = removeRouter(r, rn, logfile, 1);
 }
 //END OF STATIC FUNCTIONS AREA
 FILE * startLogFile() {
@@ -57,7 +59,7 @@ void runScript(FILE * f, FILE * logFile, FILE * output) {
                 //REGISTERTERMINAL
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                t = registerTerminal(t, str1, str2, logFile);
+                t = registerTerminal(t, str1, str2, logFile, TRUE);
                 break;
             case 3:
                 //REMOVEROUTER
@@ -68,29 +70,29 @@ void runScript(FILE * f, FILE * logFile, FILE * output) {
                 //CONNECTTERMINAL
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                linkRouterToTerminal(r, str2, t, str1, logFile);
+                linkRouterToTerminal(r, str2, t, str1, logFile, TRUE);
                 break;
             case 5:
                 //DISCONNECTTERMINAL
                 str1 = getArgument(c, 0);
-                unlinkTerminal(t, str1, logFile);
+                unlinkTerminal(t, str1, logFile, TRUE);
                 break;
             case 6:
                 //REMOVETERMINAL
                 str1 = getArgument(c, 0);
-                t = removeTerminal(t, str1, logFile);
+                t = removeTerminal(t, str1, logFile, TRUE);
                 break;
             case 7:
                 //CONNECTROUTERS
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                r = webConnectRouters(r, str1, str2, logFile, 1);
+                r = webConnectRouters(r, str1, str2, logFile, TRUE);
                 break;
             case 8:
                 //DISCONNECTROUTERS
                 str1 = getArgument(c, 0);
                 str2 = getArgument(c, 1);
-                r = webDisconnectRouters(r, str1, str2, logFile, 1);
+                r = webDisconnectRouters(r, str1, str2, logFile, TRUE);
                 break;
             case 9:
                 //TERMINALFREQUENCY

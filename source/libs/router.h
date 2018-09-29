@@ -38,7 +38,7 @@ Input: Router and terminal lists and router name.
 Output: List with removed router.
 Postcondition: Router is removed from the network.
 */
-Router * removeRouter(Router * rlist, char * rn, FILE * l);
+Router * removeRouter(Router * rlist, char * rn, FILE * l, int veriFile);
 
 /*
 --carrierFrequency--
@@ -89,5 +89,7 @@ Router * nextRouter(Router * r);
 void flagConnection(Router * r, char * r1n, char * r2n);
 
 void unflagAll(Router * r);
+
+//void printRouterAndConnections(Router * r);
 
 #endif

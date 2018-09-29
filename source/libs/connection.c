@@ -4,6 +4,9 @@
 #include "terminal.h"
 #include "router.h"
 #include "connection.h"
+#define FALSE 0
+#define TRUE 1
+
 //STRUCT AREA
 struct connections {
     Router * r;
@@ -58,9 +61,7 @@ Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
 
 Connect * destroyConnection(Connect * w, char * rn) {
     Connect * w1 = findConnectionByRouter(w, rn);
-    if(w1 == NULL) {
-        printf("ERROR: Routers are not linked.\n");
-    } else {
+    if(w1 != NULL) {
         Connect * w2 = findPreviousConnection(w, w1);
         if(w2 != NULL) w2->Next = w1->Next;
         else w = w1->Next;
