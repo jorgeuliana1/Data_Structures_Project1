@@ -4,6 +4,8 @@
 #include "terminal.h"
 #include "router.h"
 #include "connection.h"
+#define FALSE 0
+#define TRUE 1
 
 //STRUCT AREA
 struct router {
@@ -73,10 +75,10 @@ Router * registerRouter(Router * r, char * n, char * o, FILE * l) {
     return newRouter;
 }
 
-Router * removeRouter(Router * rlist, char * rn, FILE * l) {
+Router * removeRouter(Router * rlist, char * rn, FILE * l, int veriFile) {
     Router * temp = findRouter(rlist, rn);
     if(temp == NULL) {
-        fprintf(l, "ERROR: It wasn't possible to remove %s router because it doesn't exist.\n\n", rn);
+        if(veriFile) fprintf(l, "ERROR: It wasn't possible to remove %s router because it doesn't exist.\n\n", rn);
         return rlist;
     }
     if(isLast(rlist, temp)) {
@@ -121,14 +123,12 @@ char * routerName(Router * r) {
 }
 
 Router * decimateRouters(Router * r) {
-    FILE * logfile = fopen("eLog.txt", "a");
     Router * temp;
     while(r != NULL) {
         temp = r->Next;
-        removeRouter(r, r->name, logfile);
+        removeRouter(r, r->name, NULL, FALSE);
         r = temp;
     }
-    fclose(logfile);
     return NULL;
 }
 
@@ -213,3 +213,22 @@ void unflagAll(Router * r) {
     }
     return;
 }
+
+/*
+void printRouterAndConnections(Router * r) {
+    Router * auxr = r;
+    Connect * auxc;
+    while(auxr != NULL) {
+        auxc = auxr->cnt;
+        printf("Router: %s\n", routerName(auxr));
+        while(auxc != NULL) {
+            printf("%s;", routerConnected(auxc));
+            auxc = nextCNT(auxc);
+        }
+        printf("\n");
+        auxr = nextRouter(auxr);
+    }
+    printf("\n");
+    return;
+}
+*/

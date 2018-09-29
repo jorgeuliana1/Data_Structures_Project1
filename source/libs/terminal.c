@@ -3,6 +3,8 @@
 #include <string.h>
 #include "terminal.h"
 #include "router.h"
+#define FALSE 0
+#define TRUE 1
 
 //STRUCT AREA
 struct terminal {
@@ -14,7 +16,7 @@ struct terminal {
 //END OF STRUCT AREA
 
 //STATIC FUNCTIONS AREA
-static char * adjustString(char * name){
+static char * adjustString(char * name) {
     char * space = (char *)malloc(strlen(name)*sizeof(char)+1);
     strcpy(space, name);
     return space;
@@ -63,10 +65,10 @@ Terminal * findTerminalbyRouter(Terminal * t, char * rn) {
     return t;
 }
 
-Terminal * registerTerminal(Terminal * t, char * n, char * l, FILE * lf) {
+Terminal * registerTerminal(Terminal * t, char * n, char * l, FILE * lf, int veriFile) {
     Terminal * aux = findTerminal(t, n);
     if(aux != NULL) {
-        fprintf(lf, "ERROR: %s can't be registered, there's a terminal with the same name.\n\n", n);
+        if(veriFile) fprintf(lf, "ERROR: %s can't be registered, there's a terminal with the same name.\n\n", n);
         return t;
     }
     Terminal * newTerminal = (Terminal*)malloc(sizeof(Terminal));
@@ -82,11 +84,11 @@ Terminal * registerTerminal(Terminal * t, char * n, char * l, FILE * lf) {
     return newTerminal;
 }
 
-Terminal * removeTerminal(Terminal * tlist, char * tname, FILE * l){
+Terminal * removeTerminal(Terminal * tlist, char * tname, FILE * l, int veriFile) {
     Terminal * wanted = findTerminal(tlist, tname);
     Terminal * before = findPreviousTerminal(tlist, wanted);
     if(wasntFound(wanted)) { //End of list
-        fprintf(l, "ERROR: %s can't be removed, there isn't a terminal with this name.\n\n", tname);
+        if(veriFile) fprintf(l, "ERROR: %s can't be removed, there isn't a terminal with this name.\n\n", tname);
         return NULL;
     }else if (before == NULL) { //First item
         tlist = wanted->Next;
@@ -109,46 +111,43 @@ void terminalFrequency(Terminal * tlist, char * place, FILE * o) {
     fprintf(o, "TERMINALFREQUENCY %s: %d\n\n", place, i);
 }
 
-void unlinkTerminal(Terminal * tlist, char * tname, FILE * l) {
+void unlinkTerminal(Terminal * tlist, char * tname, FILE * l, int veriFile) {
     Terminal * t = findTerminal(tlist, tname);
-    if(wasntFound(t))
-        fprintf(l, "ERROR: %s can't be unlinked, there isn't a terminal with this name.\n\n", tname);
+    if(wasntFound(t)) {
+        if(veriFile) fprintf(l, "ERROR: %s can't be unlinked, there isn't a terminal with this name.\n\n", tname);
+    }
     else
         t->r = NULL;
 }
 
 Terminal * disconnectRouter(Terminal * tlist, char * rn) {
-    FILE * logfile = fopen("a.txt", "w");
     Terminal * t = tlist;
     while(t != NULL) {
         t = findTerminalbyRouter(tlist, rn);
-        if(t != NULL && !strcmp(routerName(t->r), rn)) unlinkTerminal(tlist, t->name, logfile);
+        if(t != NULL && !strcmp(routerName(t->r), rn)) unlinkTerminal(tlist, t->name, NULL, FALSE);
     }
-    fclose(logfile);
     return t;
 }
 
-void linkRouterToTerminal(Router * rlist, char * rname, Terminal * tlist, char * tname, FILE * l) {
+void linkRouterToTerminal(Router * rlist, char * rname, Terminal * tlist, char * tname, FILE * l, int veriFile) {
     Terminal * t = findTerminal(tlist, tname);
     if(t == NULL) {
-      fprintf(l, "ERROR: %s can't be linked, there isn't a terminal with this name.\n\n", tname);
+      if(veriFile) fprintf(l, "ERROR: %s can't be linked, there isn't a terminal with this name.\n\n", tname);
     }
     Router * r = findRouter(rlist, rname);
     if(r == NULL) {
-      fprintf(l, "ERROR: %s can't be linked, there isn't a router with this name.\n\n", rname);
+      if(veriFile) fprintf(l, "ERROR: %s can't be linked, there isn't a router with this name.\n\n", rname);
     }
     if(r != NULL && t != NULL) t->r = r;
 }
 
 Terminal * decimateTerminals(Terminal * t) {
-    FILE * logfile = fopen("a.txt", "a");
     Terminal * temp;
     while(t != NULL) {
         temp = t->Next;
-        removeTerminal(t, t->name, logfile);
+        removeTerminal(t, t->name, NULL, FALSE);
         t = temp;
     }
-    fclose(logfile);
     return NULL;
 }
 
