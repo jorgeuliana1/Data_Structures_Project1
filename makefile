@@ -2,6 +2,7 @@ all: install
 install:
 		@gcc source/main.c source/libs/*.c -o NetMap
 test:
+		@echo "**MAKEFILE**"
 		@gcc source/main.c source/libs/*.c -o outputs/output1/NetMap
 		@echo "MAKE: compile1   done"
 		@gcc source/main.c source/libs/*.c -o outputs/output2/NetMap
