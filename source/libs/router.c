@@ -191,8 +191,8 @@ int searchRoutersGraph(Router * r, void * t, char * tn, char * rn) {
     t = (Terminal *) t;
     Router * auxr = findRouter(r, rn);
     Connect * auxc;
-    flagRouter(r, auxr->name);
     if(auxr != NULL) {
+        flagRouter(r, auxr->name);
         if(findTerminalbyRouter(t, routerName(auxr)) != NULL)
             return TRUE;
         auxc = r->cnt;
