@@ -13,6 +13,7 @@ struct router {
     char * carrier;
     Connect * cnt;
     Router * Next;
+    int flag;
 };
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA
@@ -67,6 +68,7 @@ Router * registerRouter(Router * r, char * n, char * o, FILE * l) {
     newRouter->name = adjustString(n);
     newRouter->carrier = adjustString(o);
     newRouter->cnt = NULL;
+    newRouter->flag = FALSE;
     if(r == NULL) { //If router list is empty
         newRouter->Next = NULL;
     } else { //If router list has elements
@@ -181,37 +183,56 @@ Router * nextRouter(Router * r) {
     return r->Next;
 }
 
-void flagConnection(Router * r, char * r1n, char * r2n) {
-    Router * aux = findRouter(r, r1n);
+int searchRoutersGraph(Router * r, void * t, char * tn, char * rn) {
+    //r:  Router list.
+    //t:  Terminal list.
+    //tn: Target terminal name.
+    //rn: Router name.
+    t = (Terminal *) t;
+    Router * auxr = findRouter(r, rn);
     Connect * auxc;
-    if(aux != NULL) {
-        if(thereIsRRConnection(aux)) {
-            auxc = findConnectionByRouter(getCNT(aux), r2n);
-            auxc = flag(auxc);
+    flagRouter(r, auxr->name);
+    if(auxr != NULL) {
+        if(findTerminalbyRouter(t, routerName(auxr)) != NULL)
+            return TRUE;
+        auxc = r->cnt;
+        while(auxc != NULL) {
+            if(searchRoutersGraph(r, t, tn, routerConnected(auxc)) == TRUE) return TRUE;
+            else auxc = nextCNT(auxc);
         }
-        aux = findRouter(r, r2n);
-        if(aux != NULL) {
-            if(thereIsRRConnection(aux)) {
-                auxc = findConnectionByRouter(getCNT(aux), r1n);
-                auxc = flag(auxc);
-            }
-        }
+    }
+    return FALSE;
+}
+
+void unflagRouter(Router * r, char * rn) {
+    Router * r1 = findRouter(r, rn);
+    if(r1 != NULL) {
+        r1->flag = 0;
     }
     return;
 }
 
-void unflagAll(Router * r) {
-    Router * aux = r;
-    Connect * c;
-    while(aux != NULL) {
-        c = getCNT(aux);
-        while(c != NULL) {
-            unflag(c);
-            c = nextCNT(c);
-        }
-        aux = aux->Next;
+void flagRouter(Router * r, char * rn) {
+    Router * r1 = findRouter(r, rn);
+    if(r1 != NULL) {
+        r1->flag = TRUE;
     }
     return;
+}
+
+void unflagAllRouters(Router * r) {
+    Router * r1 = r;
+    while(r1 != NULL) {
+        r1->flag = FALSE;
+        r1 = r1->Next;
+    }
+    return;
+}
+
+int isFlagged(Router * r, char * rn) {
+    Router * r1 = findRouter(r, rn);
+    if(r1 == NULL) return -1;
+    else return r1->flag;
 }
 
 /*

@@ -86,9 +86,15 @@ Connect * getCNT(Router * r);
 
 Router * nextRouter(Router * r);
 
-void flagConnection(Router * r, char * r1n, char * r2n);
+int searchRoutersGraph(Router * r, void * t, char * tn, char * rn);
 
-void unflagAll(Router * r);
+void unflagRouter(Router * r, char * rn);
+
+void flagRouter(Router * r, char * rn);
+
+void unflagAllRouters(Router * r);
+
+int isFlagged(Router * r, char * rn);
 
 //void printRouterAndConnections(Router * r);
 
