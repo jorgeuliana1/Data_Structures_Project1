@@ -167,3 +167,30 @@ int thereIsTRConnection(Terminal * t) {
 Terminal * nextTerminal(Terminal * t) {
     return t->Next;
 }
+
+int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * file, int veriFile) {
+    //t:    Terminal list.
+    //r:    Router list.
+    //ton:  Origin terminal name.
+    //tnd:  Destination terminal name.
+    Terminal * auxt1 = findTerminal(t, ton);
+    Terminal * auxt2 = findTerminal(t, tdn);
+    if(auxt1 == NULL) {
+        if(veriFile) fprintf(file, "ERROR: Origin terminal %s doesn't exist.\n", ton);
+        return -1;
+    }
+    if(auxt2 == NULL) {
+        if(veriFile) fprintf(file, "ERROR: Destination terminal %s doesn't exist.\n", tdn);
+        return -1;
+    }
+    if(searchRoutersGraph(r, t, tdn, routerName(t->r)) ==  TRUE) {
+        printf("%s -- %s: tru3\n", ton, tdn);
+        unflagAllRouters(r);
+        return TRUE;
+    }
+    else {
+        printf("%s -- %s: fals3\n", ton, tdn);
+        unflagAllRouters(r);
+        return FALSE;
+    }
+}
