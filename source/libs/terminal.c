@@ -195,4 +195,6 @@ int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * fil
             return FALSE;
         }
     }
+    fprintf(file, "ENVIARPACOTESDADOS %s %s: NAO\n", ton, tdn);
+    return FALSE;
 }
