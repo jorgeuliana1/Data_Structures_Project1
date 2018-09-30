@@ -183,14 +183,16 @@ int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * fil
         if(veriFile) fprintf(file, "ERROR: Destination terminal %s doesn't exist.\n", tdn);
         return -1;
     }
-    if(searchRoutersGraph(r, t, tdn, routerName(t->r)) ==  TRUE) {
-        printf("%s -- %s: tru3\n", ton, tdn);
-        unflagAllRouters(r);
-        return TRUE;
-    }
-    else {
-        printf("%s -- %s: fals3\n", ton, tdn);
-        unflagAllRouters(r);
-        return FALSE;
+    if(t->r != NULL) {
+        if(searchRoutersGraph(r, t, tdn, routerName(t->r)) ==  TRUE) {
+            fprintf(file, "ENVIARPACOTESDADOS %s %s: SIM\n", ton, tdn);
+            unflagAllRouters(r);
+            return TRUE;
+        }
+        else {
+            fprintf(file, "ENVIARPACOTESDADOS %s %s: NAO\n", ton, tdn);
+            unflagAllRouters(r);
+            return FALSE;
+        }
     }
 }
