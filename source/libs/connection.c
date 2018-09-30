@@ -10,7 +10,6 @@
 //STRUCT AREA
 struct connections {
     Router * r;
-    int flag;
     Connect * Next;
 };
 //END OF STRUCT AREA
@@ -46,7 +45,6 @@ Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
         Connect * temp1;
         temp1 = (Connect *)malloc(sizeof(Connect));
         temp1->r = temp;
-        temp1->flag = 0;
         temp1->Next = NULL;
         Connect * temp2 = findLastConnection(w);
         temp2->Next = temp1;
@@ -54,7 +52,6 @@ Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
         w = (Connect *)malloc(sizeof(Connect));
         w->Next = NULL;
         w->r = temp;
-        w->flag = 0;
     }
     return w;
 }
@@ -80,18 +77,6 @@ Connect * nextCNT(Connect * w) {
 
 char * cntRouterName(Connect * w) {
     return routerName(w->r);
-}
-
-Connect * flag(Connect * c) {
-    c->flag = 1;
-}
-
-Connect * unflag(Connect * c) {
-    c->flag = 0;
-}
-
-int isFlagged(Connect * c) {
-    return c->flag;
 }
 
 Connect * findConnectionByRouter(Connect * w, char * rn) {

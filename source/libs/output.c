@@ -106,7 +106,9 @@ void runScript(FILE * f, FILE * logFile, FILE * output) {
                 break;
             case 11:
                 //SENDDATAPACKAGE
-                //WE DON'T HAVE THIS RIGHT NOW
+                str1 = getArgument(c, 0);
+                str2 = getArgument(c, 1);
+                sendDataPackage(t, r, str1, str2, output, TRUE);
                 break;
             case 12:
                 //PRINTNETMAP

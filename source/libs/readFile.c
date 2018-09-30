@@ -24,7 +24,7 @@ static int functionCode(char * f) {
     else if(!strcmp("DESCONECTAROTEADORES", f)) return 8;
     else if(!strcmp("FREQUENCIATERMINAL", f)) return 9;
     else if(!strcmp("FREQUENCIAOPERADORA", f)) return 10;
-    else if(!strcmp("ENVIARPACOTEDADOS", f)) return 11;
+    else if(!strcmp("ENVIARPACOTESDADOS", f)) return 11;
     else if(!strcmp("IMPRIMENETMAP", f)) return 12;
     else if(!strcmp("FIM", f)) return 13;
     else return 0;

@@ -36,12 +36,6 @@ Connect * nextCNT(Connect * w);
 
 char * cntRouterName(Connect * w);
 
-Connect * flag(Connect * c);
-
-Connect * unflag(Connect * c);
-
-int isFlagged(Connect * c);
-
 Connect * findConnectionByRouter(Connect * w, char * rn);
 
 #endif
