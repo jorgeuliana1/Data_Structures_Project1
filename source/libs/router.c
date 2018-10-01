@@ -108,7 +108,7 @@ void carrierFrequency(Router * rlist, char * carrier, FILE * o){
             i++;
         rlist = rlist->Next;
     }
-    fprintf(o, "CARRIERFREQUENCY %s: %d\n\n", carrier, i);
+    fprintf(o, "FREQUENCIAOPERADORA %s: %d\n", carrier, i);
 }
 
 void printRouters(Router * r) {
@@ -197,7 +197,9 @@ int searchRoutersGraph(Router * r, void * t, char * tn, char * rn) {
             return TRUE;
         auxc = r->cnt;
         while(auxc != NULL) {
-            if(searchRoutersGraph(r, t, tn, routerConnected(auxc)) == TRUE) return TRUE;
+            if(!isFlagged(r, routerConnected(auxc))) {
+                if(searchRoutersGraph(r, t, tn, routerConnected(auxc)) == TRUE) return TRUE;
+            }
             else auxc = nextCNT(auxc);
         }
     }

@@ -108,7 +108,7 @@ void terminalFrequency(Terminal * tlist, char * place, FILE * o) {
             i++;
         tlist = tlist->Next;
     }
-    fprintf(o, "TERMINALFREQUENCY %s: %d\n\n", place, i);
+    fprintf(o, "FREQUENCIATERMINAL %s: %d\n", place, i);
 }
 
 void unlinkTerminal(Terminal * tlist, char * tname, FILE * l, int veriFile) {
@@ -168,7 +168,7 @@ Terminal * nextTerminal(Terminal * t) {
     return t->Next;
 }
 
-int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * file, int veriFile) {
+int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * file, int veriFile, FILE * log, int veriLog) {
     //t:    Terminal list.
     //r:    Router list.
     //ton:  Origin terminal name.
@@ -176,11 +176,11 @@ int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * fil
     Terminal * auxt1 = findTerminal(t, ton);
     Terminal * auxt2 = findTerminal(t, tdn);
     if(auxt1 == NULL) {
-        if(veriFile) fprintf(file, "ERROR: Origin terminal %s doesn't exist.\n", ton);
+        if(veriLog) fprintf(log, "Error: Origin terminal %s doesn't exist.\n", ton);
         return -1;
     }
     if(auxt2 == NULL) {
-        if(veriFile) fprintf(file, "ERROR: Destination terminal %s doesn't exist.\n", tdn);
+        if(veriLog) fprintf(log, "Error: Destination terminal %s doesn't exist.\n", tdn);
         return -1;
     }
     if(t->r != NULL) {

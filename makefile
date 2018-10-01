@@ -2,7 +2,7 @@ all: install
 test: install-all test-all
 install:
 		@gcc source/main.c source/libs/*.c -o NetMap
-intall-all:
+install-all:
 		@gcc source/main.c source/libs/*.c -o outputs/output1/NetMap
 		@echo "MAKE: compile1   done"
 		@gcc source/main.c source/libs/*.c -o outputs/output2/NetMap

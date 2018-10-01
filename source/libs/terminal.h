@@ -94,6 +94,6 @@ int thereIsTRConnection(Terminal * t);
 
 Terminal * nextTerminal(Terminal * t);
 
-int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * file, int veriFile);
+int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * file, int veriFile, FILE * log, int veriLog);
 
 #endif
