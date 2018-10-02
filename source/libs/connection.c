@@ -38,7 +38,7 @@ Connect * inicializeConnection(Connect * connect) {
     return NULL;
 }
 
-Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
+Connect * addConnection(Connect * w, void * rlist, char * rn) {
     rlist = (Router *) rlist;
     Router * temp = findRouter(rlist, rn);
     if(w != NULL) {
@@ -57,7 +57,7 @@ Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
     return w;
 }
 
-Connect * destroyConnection(Connect * w, char * rn) {
+Connect * removeConnection(Connect * w, char * rn) {
     Connect * w1 = findConnectionByRouter(w, rn);
     if(w1 != NULL) {
         Connect * w2 = findPreviousConnection(w, w1);
@@ -66,10 +66,6 @@ Connect * destroyConnection(Connect * w, char * rn) {
         free(w1);
     }
     return w;
-}
-
-char * routerConnected(Connect * w) {
-    return routerName(w->r);
 }
 
 Connect * nextCNT(Connect * w) {
@@ -83,4 +79,5 @@ char * cntRouterName(Connect * w) {
 Connect * findConnectionByRouter(Connect * w, char * rn) {
     while(strcmp(routerName(w->r), rn)) w = w->Next;
     return w;
+    //If the connection wasn't found it will return NULL.
 }

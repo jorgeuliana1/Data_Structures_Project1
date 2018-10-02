@@ -19,7 +19,7 @@ Input: Connections list, routers list, routers names.
 Output: Updated connection.
 Postcondition: Routers are connected to each other.
 */
-Connect * webConnectRouterLL(Connect * w, void * r, char * rn);
+Connect * addConnection(Connect * w, void * r, char * rn);
 
 /*
 --webConnectRoutersLL--
@@ -28,9 +28,7 @@ Input: Not inicialized connection.
 Output: Inicialized connection.
 Postcondition: Connection is ready to be used.
 */
-Connect * destroyConnection(Connect * w, char * rn);
-
-char * routerConnected(Connect * w);
+Connect * removeConnection(Connect * w, char * rn);
 
 Connect * nextCNT(Connect * w);
 
