@@ -95,17 +95,6 @@ static int verifyTerminalsAccess(Router * rlist, Terminal * tlist, char * tname1
     return routersGraphSearch(rlist, findRouter(rlist, rname1), rname2);
 }
 //END OF STATIC FUNCTIONS AREA
-int checkTRConnection(Terminal * tlist, char * rname, char * tname) {
-    //NEED TO FIX THIS!!!!!
-    /*provisory --- will affect functions*/ return FALSE;
-    Terminal * aux = tlist;
-    while(aux != NULL) {
-        if(aux->r != NULL && !strcmp(routerName(aux->r), rname) && !strcmp(terminalName(aux), tname)) return TRUE;
-        aux = aux->Next;
-    }
-
-    return FALSE;
-}
 Terminal * inicializeTerminals() {
     return NULL;
 }
@@ -131,19 +120,19 @@ Terminal * findTerminalbyRouter(Terminal * t, char * rn) {
 Terminal * registerTerminal(Terminal * t, char * n, char * l, FILE * lf, int veriFile) {
     Terminal * aux = findTerminal(t, n);
     if(aux != NULL) {
-        if(veriFile) fprintf(lf, "ERROR: %s can't be registered, there's a terminal with the same name.\n\n", n);
+        if(veriFile) fprintf(lf, "Erro: %s nao pode ser registrado, existe um terminal com o mesmo nome.\n", n);
         return t;
     }
+    //If there isn't any terminal with the same name.
     Terminal * newTerminal = (Terminal*)malloc(sizeof(Terminal));
     newTerminal->name = adjustString(n);
     newTerminal->place = adjustString(l);
     newTerminal->r = NULL;
 
-    if(!t) { //If terminal list is empty
+    if(!t)//If terminal list is empty.
         newTerminal->Next = NULL;
-    } else { //If terminal list has elements
+    else //If terminal list has elements.
         newTerminal->Next = t;
-    }
     return newTerminal;
 }
 
@@ -151,13 +140,16 @@ Terminal * removeTerminal(Terminal * tlist, char * tname, FILE * l, int veriFile
     Terminal * wanted = findTerminal(tlist, tname);
     Terminal * before = findPreviousTerminal(tlist, wanted);
     if(wasntFound(wanted)) {
-        if(veriFile) fprintf(l, "ERROR: %s can't be removed, there isn't a terminal with this name.\n\n", tname);
+        if(veriFile) fprintf(l, "Erro: %s nao pode ser removido, nao existe um terminal com esse nome.\n", tname);
         return NULL;
-    } else if (before == NULL) { //First item
+    } else if (before == NULL) {
+        //First item
         tlist = wanted->Next;
-    } else if(wanted->Next == NULL){ //Last item
+    } else if(wanted->Next == NULL){
+        //Last item
         before->Next == NULL;
-    } else { //Middle item
+    } else {
+        //Middle item
         before->Next = wanted->Next;
     }
     wanted = freeTerminal(wanted);
@@ -177,7 +169,7 @@ void terminalFrequency(Terminal * tlist, char * place, FILE * o) {
 void unlinkTerminal(Terminal * tlist, char * tname, FILE * l, int veriFile) {
     Terminal * t = findTerminal(tlist, tname);
     if(wasntFound(t)) {
-        if(veriFile) fprintf(l, "ERROR: %s can't be unlinked, there isn't a terminal with this name.\n\n", tname);
+        if(veriFile) fprintf(l, "Erro: %s nao pode ser desconectado, nao existe terminal com esse nome.\n", tname);
     }
     else
         t->r = NULL;
@@ -195,11 +187,11 @@ Terminal * disconnectRouter(Terminal * tlist, char * rn) {
 void linkRouterToTerminal(Router * rlist, char * rname, Terminal * tlist, char * tname, FILE * l, int veriFile) {
     Terminal * t = findTerminal(tlist, tname);
     if(t == NULL) {
-      if(veriFile) fprintf(l, "ERROR: %s can't be linked, there isn't a terminal with this name.\n\n", tname);
+      if(veriFile) fprintf(l, "Erro: %s nao pode ser conectado, nao existe terminal com esse nome.\n\n", tname);
     }
     Router * r = findRouter(rlist, rname);
     if(r == NULL) {
-      if(veriFile) fprintf(l, "ERROR: %s can't be linked, there isn't a router with this name.\n\n", rname);
+      if(veriFile) fprintf(l, "Erro: %s nao pode ser conectado, nao existe roteador com esse nome.\n\n", rname);
     }
     if(r != NULL && t != NULL) t->r = r;
 }
@@ -239,11 +231,11 @@ int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * fil
     Terminal * auxt1 = findTerminal(t, ton);
     Terminal * auxt2 = findTerminal(t, tdn);
     if(auxt1 == NULL) {
-        if(veriLog) fprintf(log, "ERROR: Origin terminal %s doesn't exist.\n", ton);
+        if(veriLog) fprintf(log, "Erro: Terminal %s nao existe.\n", ton);
         return -1;
     }
     if(auxt2 == NULL) {
-        if(veriLog) fprintf(log, "ERROR: Destination terminal %s doesn't exist.\n", tdn);
+        if(veriLog) fprintf(log, "Erro: Terminal %s nao existe.\n", tdn);
         return -1;
     }
     if(auxt1->r != NULL) {
