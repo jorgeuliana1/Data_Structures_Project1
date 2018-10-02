@@ -186,31 +186,37 @@ Router * nextRouter(Router * r) {
     return r->Next;
 }
 
-/*
-int searchRoutersGraph(Router * r, void * t, char * tn, char * rn) {
-    //r:  Router list.
-    //t:  Terminal list.
-    //tn: Target terminal name.
-    //rn: Router name.
-    t = (Terminal *) t;
-    Router * auxr = findRouter(r, rn);
-    Connect * auxc;
-    Terminal * auxt;
-    if(auxr != NULL) {
-        flagRouter(r, auxr->name);
-        if(checkTRConnection(t, routerName(auxr), tn)) return TRUE;
-        //THE PROBLEM STARTS HERE
-        auxc = auxr->cnt;
-        while(auxc != NULL) {
-            if(searchRoutersGraph(r, t, tn, routerConnected(auxc))) return TRUE;
-            auxc = nextCNT(auxc);
+int routersGraphSearch(Router * rlist, Router * ro, char * rname2) {
+    /*
+    --STEPS--
+    1-VERIFY ROUTER CONNECTIONS.
+    2-ENTER ALL CONNECTIONS.
+    3-CHECK IF THE OTHER ROUTER IS CONNECTED.
+    4-DO IT AGAIN UNTIL IT WORKS! (Recursive)
+    --VARIABLES--
+    rlist:  List of routers.
+    rname1: Router 1 name.
+    rname2: Router 2 name.
+    */
+    //STEPS 1, 2 AND 3
+    int verification;
+    printf("checking %s %s\n", routerName(ro), rname2);
+    if(ro == NULL) return FALSE;
+    flagRouter(rlist, routerName(ro));
+    Connect * cnt = ro->cnt;
+    while(cnt != NULL) {
+        if(!strcmp(cntRouterName(cnt), rname2)) {
+            printf("is connected\n");
+            return TRUE;
         }
+        Router * ro2 = findRouter(rlist, cntRouterName(cnt));
+        if(!isFlagged(rlist, routerName(ro2)))
+            verification = routersGraphSearch(rlist, ro2, rname2);
+        if(verification) return TRUE;
+        else cnt = nextCNT(cnt);
     }
     return FALSE;
 }
-*/
-
-int searchRoutersGraph(Router)
 
 void unflagRouter(Router * r, char * rn) {
     Router * r1 = findRouter(r, rn);

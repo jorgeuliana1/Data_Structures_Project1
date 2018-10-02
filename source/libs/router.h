@@ -86,7 +86,7 @@ Connect * getCNT(Router * r);
 
 Router * nextRouter(Router * r);
 
-int searchRoutersGraph(Router * r, void * t, char * tn, char * rn);
+int routersGraphSearch(Router * rlist, Router * ro, char * rname2);
 
 void unflagRouter(Router * r, char * rn);
 

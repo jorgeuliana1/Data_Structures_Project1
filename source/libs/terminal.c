@@ -42,6 +42,58 @@ static Terminal * findPreviousTerminal(Terminal * t, Terminal * tw) {
     }
     return t;
 }
+
+static int verifyTerminalsAccess(Router * rlist, Terminal * tlist, char * tname1, char * tname2) {
+    /*
+    --STEPS--
+    1-DEFINING VARIABLES.
+    2-CALLING GRAPH TRAVERSING FUNCTION.
+    3-RETURNING TRUE OR FALSE.
+    --VARIABLES NAMES--
+    rlist:  Routers list.
+    tlist:  Terminals list.
+    tname1: Origin terminal name.
+    tname2: Destiny terminal name.
+    rname1: Router connected to terminal with tname1.
+    rname2: Router connecter to terminal with tname2.
+    --FUNCTION RETURNS--
+    TRUE  - If it is possible to access t2 by t1.
+    FALSE - If it is not possible to access t2 by t1.
+    -1    - If t1 doesn't have any connection or doesn't exist.
+    -2    - If t2 doesn't have any connection or doesn't exist.
+    -3    - If t1 and t2 doesn't have any connection or doesn't exist.
+    */
+    //PART 1 - DEFINING VARIABLES (rname1 and rname2)
+    char * rname1;
+    char * rname2;
+    Terminal * aux1 = tlist;
+    while(aux1 != NULL) {
+        if(!strcmp(aux1->name, tname1)) {
+            if(aux1->r != NULL)
+                rname1 = routerName(aux1->r);
+            break;
+        }
+        aux1 = aux1->Next;
+    }
+    Terminal * aux2 = tlist;
+    while(aux2 != NULL) {
+        if(!strcmp(aux2->name, tname2)) {
+            if(aux2->r != NULL)
+                rname2 = routerName(aux2->r);
+            break;
+        }
+        aux2 = aux2->Next;
+    }
+    //Verifications
+    if(aux1 == NULL && aux2 == NULL) return -3;
+    else if(aux1 == NULL) return -1;
+    else if(aux2 == NULL) return -2;
+    else if(rname1 == NULL && rname2 == NULL) return -3;
+    else if(rname1 == NULL) return -1;
+    else if(rname2 == NULL) return -2;
+    //PART 2 AND 3
+    return routersGraphSearch(rlist, findRouter(rlist, rname1), rname2);
+}
 //END OF STATIC FUNCTIONS AREA
 int checkTRConnection(Terminal * tlist, char * rname, char * tname) {
     //NEED TO FIX THIS!!!!!
@@ -195,7 +247,7 @@ int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * fil
         return -1;
     }
     if(auxt1->r != NULL) {
-        if(searchRoutersGraph(r, t, tdn, routerName(auxt1->r)) ==  TRUE) {
+        if(verifyTerminalsAccess(r, t, ton, tdn) == TRUE) {
             fprintf(file, "ENVIARPACOTESDADOS %s %s: SIM\n", ton, tdn);
             unflagAllRouters(r);
             return TRUE;
