@@ -1,5 +1,6 @@
 all: install
 test: install-all test-all
+teste-ndiff: install-all test-all diff-saida-txt
 install:
 		@gcc source/main.c source/libs/*.c -o NetMap
 install-all:
