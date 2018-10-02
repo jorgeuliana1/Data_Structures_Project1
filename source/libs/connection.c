@@ -42,6 +42,7 @@ Connect * addConnection(Connect * w, void * rlist, char * rn) {
     rlist = (Router *) rlist;
     Router * temp = findRouter(rlist, rn);
     if(w != NULL) {
+        //If there isn't any connection.
         Connect * temp1;
         temp1 = (Connect *)malloc(sizeof(Connect));
         temp1->r = temp;
@@ -50,6 +51,7 @@ Connect * addConnection(Connect * w, void * rlist, char * rn) {
         if(temp2 != NULL) temp2->Next = temp1;
         else w = temp1;
     } else {
+        //If there is at least one connection.
         w = (Connect *)malloc(sizeof(Connect));
         w->Next = NULL;
         w->r = temp;
@@ -60,6 +62,7 @@ Connect * addConnection(Connect * w, void * rlist, char * rn) {
 Connect * removeConnection(Connect * w, char * rn) {
     Connect * w1 = findConnectionByRouter(w, rn);
     if(w1 != NULL) {
+        //If w1 is NULL there isn't any connection to be deleted.
         Connect * w2 = findPreviousConnection(w, w1);
         if(w2 != NULL) w2->Next = w1->Next;
         else w = w1->Next;
