@@ -248,22 +248,3 @@ int isFlagged(Router * r, char * rn) {
     if(r1 == NULL) return -1;
     else return r1->flag;
 }
-
-/*
-void printRouterAndConnections(Router * r) {
-    Router * auxr = r;
-    Connect * auxc;
-    while(auxr != NULL) {
-        auxc = auxr->cnt;
-        printf("Router: %s\n", routerName(auxr));
-        while(auxc != NULL) {
-            printf("%s;", routerConnected(auxc));
-            auxc = nextCNT(auxc);
-        }
-        printf("\n");
-        auxr = nextRouter(auxr);
-    }
-    printf("\n");
-    return;
-}
-*/
