@@ -13,7 +13,7 @@ FILE * openGVFile() {
 void createDot(Terminal * t, Router * r, FILE * f) {
     static int counter = 0;
     counter++;
-    if(counter > 1) fprintf(f, "//intermediario\n");
+    if(counter > 1) fprintf(f, "//intermediario\n\n");
     fprintf(f, "strict graph {\n");
     Terminal * auxt = t;
     Router * auxr = r;

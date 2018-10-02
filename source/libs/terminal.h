@@ -3,6 +3,8 @@
 #include "router.h"
 typedef struct terminal Terminal;
 
+int checkTRConnection(Terminal * tlist, char * rname, char * tname);
+
 /*
 --inicializeTerminals--
 Precondition: Terminal list in not inicialized.

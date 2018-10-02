@@ -79,22 +79,25 @@ Router * registerRouter(Router * r, char * n, char * o, FILE * l) {
 
 Router * removeRouter(Router * rlist, char * rn, FILE * l, int veriFile) {
     Router * temp = findRouter(rlist, rn);
+    Router * temp2;
     if(temp == NULL) {
-        if(veriFile) fprintf(l, "ERROR: It wasn't possible to remove %s router because it doesn't exist.\n\n", rn);
+        if(veriFile) fprintf(l, "Erro: Roteador %s inexistente no NetMap.\n\n", rn);
         return rlist;
     }
+    while(thereIsRRConnection(temp)) {
+        rlist = webDisconnectRouters(rlist, rn, cntRouterName(temp->cnt), NULL, FALSE);
+    }
     if(isLast(rlist, temp)) {
-        rlist = findPreviousRouter(rlist, temp);
-        rlist->Next = NULL;
+        temp2 = findPreviousRouter(rlist, temp);
+        if(temp2 != NULL) temp2->Next = NULL;
     }
     else if(isMiddle(rlist, temp)) {
-        rlist = findPreviousRouter(rlist, temp);
-        rlist->Next = temp->Next;
+        temp2 = findPreviousRouter(rlist, temp);
+        if(temp2 != NULL) temp2->Next = temp->Next;
     }
     else if(isFirst(rlist, temp)) {
         rlist = temp->Next;
     }
-    rlist->cnt = temp->cnt;
     free(temp->name);
     free(temp->carrier);
     free(temp);
@@ -183,6 +186,7 @@ Router * nextRouter(Router * r) {
     return r->Next;
 }
 
+/*
 int searchRoutersGraph(Router * r, void * t, char * tn, char * rn) {
     //r:  Router list.
     //t:  Terminal list.
@@ -191,20 +195,22 @@ int searchRoutersGraph(Router * r, void * t, char * tn, char * rn) {
     t = (Terminal *) t;
     Router * auxr = findRouter(r, rn);
     Connect * auxc;
+    Terminal * auxt;
     if(auxr != NULL) {
         flagRouter(r, auxr->name);
-        if(findTerminalbyRouter(t, routerName(auxr)) != NULL)
-            return TRUE;
-        auxc = r->cnt;
+        if(checkTRConnection(t, routerName(auxr), tn)) return TRUE;
+        //THE PROBLEM STARTS HERE
+        auxc = auxr->cnt;
         while(auxc != NULL) {
-            if(!isFlagged(r, routerConnected(auxc))) {
-                if(searchRoutersGraph(r, t, tn, routerConnected(auxc)) == TRUE) return TRUE;
-            }
-            else auxc = nextCNT(auxc);
+            if(searchRoutersGraph(r, t, tn, routerConnected(auxc))) return TRUE;
+            auxc = nextCNT(auxc);
         }
     }
     return FALSE;
 }
+*/
+
+int searchRoutersGraph(Router)
 
 void unflagRouter(Router * r, char * rn) {
     Router * r1 = findRouter(r, rn);

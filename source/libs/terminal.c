@@ -22,10 +22,11 @@ static char * adjustString(char * name) {
     return space;
 }
 
-static void freeTerminal(Terminal * t){
+static Terminal * freeTerminal(Terminal * t){
     free(t->name);
     free(t->place);
     free(t);
+    return NULL;
 }
 
 static int wasntFound(void * a){
@@ -42,7 +43,17 @@ static Terminal * findPreviousTerminal(Terminal * t, Terminal * tw) {
     return t;
 }
 //END OF STATIC FUNCTIONS AREA
+int checkTRConnection(Terminal * tlist, char * rname, char * tname) {
+    //NEED TO FIX THIS!!!!!
+    /*provisory --- will affect functions*/ return FALSE;
+    Terminal * aux = tlist;
+    while(aux != NULL) {
+        if(aux->r != NULL && !strcmp(routerName(aux->r), rname) && !strcmp(terminalName(aux), tname)) return TRUE;
+        aux = aux->Next;
+    }
 
+    return FALSE;
+}
 Terminal * inicializeTerminals() {
     return NULL;
 }
@@ -87,17 +98,17 @@ Terminal * registerTerminal(Terminal * t, char * n, char * l, FILE * lf, int ver
 Terminal * removeTerminal(Terminal * tlist, char * tname, FILE * l, int veriFile) {
     Terminal * wanted = findTerminal(tlist, tname);
     Terminal * before = findPreviousTerminal(tlist, wanted);
-    if(wasntFound(wanted)) { //End of list
+    if(wasntFound(wanted)) {
         if(veriFile) fprintf(l, "ERROR: %s can't be removed, there isn't a terminal with this name.\n\n", tname);
         return NULL;
-    }else if (before == NULL) { //First item
+    } else if (before == NULL) { //First item
         tlist = wanted->Next;
-    }else if(wanted->Next == NULL){ //Last item
+    } else if(wanted->Next == NULL){ //Last item
         before->Next == NULL;
-    }else { //Middle item
+    } else { //Middle item
         before->Next = wanted->Next;
     }
-    freeTerminal(wanted);
+    wanted = freeTerminal(wanted);
     return tlist;
 }
 
@@ -172,19 +183,19 @@ int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * fil
     //t:    Terminal list.
     //r:    Router list.
     //ton:  Origin terminal name.
-    //tnd:  Destination terminal name.
+    //tdn:  Target terminal name.
     Terminal * auxt1 = findTerminal(t, ton);
     Terminal * auxt2 = findTerminal(t, tdn);
     if(auxt1 == NULL) {
-        if(veriLog) fprintf(log, "Error: Origin terminal %s doesn't exist.\n", ton);
+        if(veriLog) fprintf(log, "ERROR: Origin terminal %s doesn't exist.\n", ton);
         return -1;
     }
     if(auxt2 == NULL) {
-        if(veriLog) fprintf(log, "Error: Destination terminal %s doesn't exist.\n", tdn);
+        if(veriLog) fprintf(log, "ERROR: Destination terminal %s doesn't exist.\n", tdn);
         return -1;
     }
-    if(t->r != NULL) {
-        if(searchRoutersGraph(r, t, tdn, routerName(t->r)) ==  TRUE) {
+    if(auxt1->r != NULL) {
+        if(searchRoutersGraph(r, t, tdn, routerName(auxt1->r)) ==  TRUE) {
             fprintf(file, "ENVIARPACOTESDADOS %s %s: SIM\n", ton, tdn);
             unflagAllRouters(r);
             return TRUE;

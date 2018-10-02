@@ -10,16 +10,7 @@
 //STATIC FUNCTIONS AREA
 static Router * destroyRouter(Router * r, Terminal * t, char * rn, FILE * logfile) {
     t = disconnectRouter(t, rn);
-    Router * auxr = findRouter(r, rn);
-    Connect * auxc;
-    if(auxr != NULL && thereIsRRConnection(auxr)) {
-        auxc = getCNT(auxr);
-        while(auxc != NULL) {
-            auxr = webDisconnectRouters(r, rn, cntRouterName(auxc), NULL, FALSE);
-            auxc = nextCNT(auxc);
-        }
-    }
-    r = removeRouter(r, rn, logfile, 1);
+    r = removeRouter(r, rn, logfile, TRUE);
 }
 //END OF STATIC FUNCTIONS AREA
 FILE * startLogFile() {

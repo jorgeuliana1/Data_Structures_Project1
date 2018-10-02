@@ -47,7 +47,8 @@ Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
         temp1->r = temp;
         temp1->Next = NULL;
         Connect * temp2 = findLastConnection(w);
-        temp2->Next = temp1;
+        if(temp2 != NULL) temp2->Next = temp1;
+        else w = temp1;
     } else {
         w = (Connect *)malloc(sizeof(Connect));
         w->Next = NULL;
