@@ -151,8 +151,8 @@ Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, int
         }
         return rlist;
     }
-    r1->cnt = webConnectRouterLL(r1->cnt, rlist, rn2);
-    r2->cnt = webConnectRouterLL(r2->cnt, rlist, rn1);
+    r1->cnt = addConnection(r1->cnt, rlist, rn2);
+    r2->cnt = addConnection(r2->cnt, rlist, rn1);
     return rlist;
 }
 
@@ -168,8 +168,8 @@ Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, 
         }
         return rlist;
     }
-    temp1->cnt = destroyConnection(temp1->cnt, rn2);
-    temp2->cnt = destroyConnection(temp2->cnt, rn1);
+    temp1->cnt = removeConnection(temp1->cnt, rn2);
+    temp2->cnt = removeConnection(temp2->cnt, rn1);
     return rlist;
 }
 
