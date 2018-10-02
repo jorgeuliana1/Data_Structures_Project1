@@ -28,5 +28,18 @@ test-all:
 		@echo "MAKE: test5      done"
 		@cd outputs/output6 && ./NetMap ../../inputs/input6.txt && cd ../../
 		@echo "MAKE: test6      done"
+diff-saida-txt:
+		@diff outputs/default1/saida.txt outputs/output1/saida.txt
+		@echo "MAKE: diff1      done"
+		@diff outputs/default2/saida.txt outputs/output2/saida.txt
+		@echo "MAKE: diff2      done"
+		@diff outputs/default3/saida.txt outputs/output3/saida.txt
+		@echo "MAKE: diff3      done"
+		@diff outputs/default4/saida.txt outputs/output4/saida.txt
+		@echo "MAKE: diff4      done"
+		@diff outputs/default5/saida.txt outputs/output5/saida.txt
+		@echo "MAKE: diff5      done"
+		@diff outputs/default6/saida.txt outputs/output6/saida.txt
+		@echo "MAKE: diff6      done"
 clear:
 		@rm NetMap
