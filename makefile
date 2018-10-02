@@ -29,6 +29,19 @@ test-all:
 		@echo "MAKE: test5      done"
 		@cd outputs/output6 && ./NetMap ../../inputs/input6.txt && cd ../../
 		@echo "MAKE: test6      done"
+test-all-valgrind:
+		@cd outputs/output1 && valgrind --leak-check=full ./NetMap ../../inputs/input1.txt && cd ../../
+		@echo "MAKE: test1      done"
+		@cd outputs/output2 && valgrind --leak-check=full ./NetMap ../../inputs/input2.txt && cd ../../
+		@echo "MAKE: test2      done"
+		@cd outputs/output3 && valgrind --leak-check=full ./NetMap ../../inputs/input3.txt && cd ../../
+		@echo "MAKE: test3      done"
+		@cd outputs/output4 && valgrind --leak-check=full ./NetMap ../../inputs/input4.txt && cd ../../
+		@echo "MAKE: test4      done"
+		@cd outputs/output5 && valgrind --leak-check=full ./NetMap ../../inputs/input5.txt && cd ../../
+		@echo "MAKE: test5      done"
+		@cd outputs/output6 && valgrind --leak-check=full ./NetMap ../../inputs/input6.txt && cd ../../
+		@echo "MAKE: test6      done"
 diff-saida-txt:
 		@diff outputs/default1/saida.txt outputs/output1/saida.txt
 		@echo "MAKE: diff1      done"
