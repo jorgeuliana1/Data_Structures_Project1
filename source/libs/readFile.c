@@ -7,13 +7,14 @@
 
 //STRUCT AREA
 struct command {
-  int fCode;   //Function code.
+  int fCode;    //Function code.
   char * h;     //Saves the function header.
   char ** args; //Saves the arguments.
 };
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA
 static int functionCode(char * f) {
+    //It will return an ID to each function.
     if(!strcmp("CADASTRAROTEADOR", f)) return 1;
     else if(!strcmp("CADASTRATERMINAL", f)) return 2;
     else if(!strcmp("REMOVEROTEADOR", f)) return 3;
@@ -31,6 +32,7 @@ static int functionCode(char * f) {
 }
 
 static int numArgs(int n) {
+    //It will return the number of arguments of a specific funtion.
     if(n == 12 || n == 13) return 0;
     else if(n == 1 || n ==  2 || n == 4 || n == 7 || n == 8 || n == 11) return 2;
     else if(n == 0) return -1;
@@ -54,11 +56,14 @@ Command * readCommand(FILE * f) {
     Command * c;
     c = (Command *)malloc(sizeof(Command));
     char temp[100];
+    //GET THE FUNCTION HEADER
     fscanf(f, "%s", temp);
     c->h = (char *)malloc(sizeof(char)*(strlen(temp)+1));
     strcpy(c->h, temp);
+    //TRANSFORM THE HEADER IN ID
     c->fCode = functionCode(c->h);
     int n = numArgs(c->fCode);
+    //GET ALL THE ARGUMENTS
     c->args = (char **)malloc(sizeof(char*)*n);
     int i;
     for(i = 0; i < n; i++) {
@@ -84,7 +89,6 @@ Command * destroyCommand(Command * c) {
 
 char * getArgument(Command * c, int n) {
     if(n > numArgs(c->fCode) - 1) {
-        printf("ERROR: Argument does not exist.\n");
         return "(error)";
     }
     else {

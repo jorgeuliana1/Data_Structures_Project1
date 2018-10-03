@@ -38,17 +38,25 @@ Connect * inicializeConnection(Connect * connect) {
     return NULL;
 }
 
-Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
+Connect * addConnection(Connect * w, void * rlist, char * rn) {
+    //Casting to avoid problems with void pointer.
+    /*
+    NOTE: VOID POINTER WAS USED BECAUSE IT WASN'T IMPOSSIBLE TO ADD THE ROUTER
+    TYPE TO THE HEADER FILE.
+    */
     rlist = (Router *) rlist;
     Router * temp = findRouter(rlist, rn);
     if(w != NULL) {
+        //If there isn't any connection.
         Connect * temp1;
         temp1 = (Connect *)malloc(sizeof(Connect));
         temp1->r = temp;
         temp1->Next = NULL;
         Connect * temp2 = findLastConnection(w);
-        temp2->Next = temp1;
+        if(temp2 != NULL) temp2->Next = temp1;
+        else w = temp1;
     } else {
+        //If there is at least one connection.
         w = (Connect *)malloc(sizeof(Connect));
         w->Next = NULL;
         w->r = temp;
@@ -56,19 +64,16 @@ Connect * webConnectRouterLL(Connect * w, void * rlist, char * rn) {
     return w;
 }
 
-Connect * destroyConnection(Connect * w, char * rn) {
+Connect * removeConnection(Connect * w, char * rn) {
     Connect * w1 = findConnectionByRouter(w, rn);
     if(w1 != NULL) {
+        //If w1 is NULL there isn't any connection to be deleted.
         Connect * w2 = findPreviousConnection(w, w1);
         if(w2 != NULL) w2->Next = w1->Next;
         else w = w1->Next;
         free(w1);
     }
     return w;
-}
-
-char * routerConnected(Connect * w) {
-    return routerName(w->r);
 }
 
 Connect * nextCNT(Connect * w) {
@@ -82,4 +87,5 @@ char * cntRouterName(Connect * w) {
 Connect * findConnectionByRouter(Connect * w, char * rn) {
     while(strcmp(routerName(w->r), rn)) w = w->Next;
     return w;
+    //If the connection wasn't found it will return NULL.
 }

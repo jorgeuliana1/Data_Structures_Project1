@@ -79,22 +79,25 @@ Router * registerRouter(Router * r, char * n, char * o, FILE * l) {
 
 Router * removeRouter(Router * rlist, char * rn, FILE * l, int veriFile) {
     Router * temp = findRouter(rlist, rn);
+    Router * temp2;
     if(temp == NULL) {
-        if(veriFile) fprintf(l, "ERROR: It wasn't possible to remove %s router because it doesn't exist.\n\n", rn);
+        if(veriFile) fprintf(l, "Erro: Roteador %s inexistente no NetMap.\n\n", rn);
         return rlist;
     }
+    while(thereIsRRConnection(temp)) {
+        rlist = webDisconnectRouters(rlist, rn, cntRouterName(temp->cnt), NULL, FALSE);
+    }
     if(isLast(rlist, temp)) {
-        rlist = findPreviousRouter(rlist, temp);
-        rlist->Next = NULL;
+        temp2 = findPreviousRouter(rlist, temp);
+        if(temp2 != NULL) temp2->Next = NULL;
     }
     else if(isMiddle(rlist, temp)) {
-        rlist = findPreviousRouter(rlist, temp);
-        rlist->Next = temp->Next;
+        temp2 = findPreviousRouter(rlist, temp);
+        if(temp2 != NULL) temp2->Next = temp->Next;
     }
     else if(isFirst(rlist, temp)) {
         rlist = temp->Next;
     }
-    rlist->cnt = temp->cnt;
     free(temp->name);
     free(temp->carrier);
     free(temp);
@@ -108,7 +111,7 @@ void carrierFrequency(Router * rlist, char * carrier, FILE * o){
             i++;
         rlist = rlist->Next;
     }
-    fprintf(o, "CARRIERFREQUENCY %s: %d\n\n", carrier, i);
+    fprintf(o, "FREQUENCIAOPERADORA %s: %d\n", carrier, i);
 }
 
 void printRouters(Router * r) {
@@ -148,8 +151,8 @@ Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, int
         }
         return rlist;
     }
-    r1->cnt = webConnectRouterLL(r1->cnt, rlist, rn2);
-    r2->cnt = webConnectRouterLL(r2->cnt, rlist, rn1);
+    r1->cnt = addConnection(r1->cnt, rlist, rn2);
+    r2->cnt = addConnection(r2->cnt, rlist, rn1);
     return rlist;
 }
 
@@ -165,8 +168,8 @@ Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, 
         }
         return rlist;
     }
-    temp1->cnt = destroyConnection(temp1->cnt, rn2);
-    temp2->cnt = destroyConnection(temp2->cnt, rn1);
+    temp1->cnt = removeConnection(temp1->cnt, rn2);
+    temp2->cnt = removeConnection(temp2->cnt, rn1);
     return rlist;
 }
 
@@ -183,23 +186,34 @@ Router * nextRouter(Router * r) {
     return r->Next;
 }
 
-int searchRoutersGraph(Router * r, void * t, char * tn, char * rn) {
-    //r:  Router list.
-    //t:  Terminal list.
-    //tn: Target terminal name.
-    //rn: Router name.
-    t = (Terminal *) t;
-    Router * auxr = findRouter(r, rn);
-    Connect * auxc;
-    if(auxr != NULL) {
-        flagRouter(r, auxr->name);
-        if(findTerminalbyRouter(t, routerName(auxr)) != NULL)
+int routersGraphSearch(Router * rlist, Router * ro, char * rname2) {
+    /*
+    --STEPS--
+    1-VERIFY ROUTER CONNECTIONS.
+    2-ENTER ALL CONNECTIONS.
+    3-CHECK IF THE OTHER ROUTER IS CONNECTED.
+    4-DO IT AGAIN UNTIL IT WORKS! (Recursive)
+    --VARIABLES--
+    rlist:  List of routers.
+    rname1: Router 1 name.
+    rname2: Router 2 name.
+    */
+    //STEPS 1, 2 AND 3
+    int verification;
+    printf("checking %s %s\n", routerName(ro), rname2);
+    if(ro == NULL) return FALSE;
+    flagRouter(rlist, routerName(ro));
+    Connect * cnt = ro->cnt;
+    while(cnt != NULL) {
+        if(!strcmp(cntRouterName(cnt), rname2)) {
+            printf("is connected\n");
             return TRUE;
-        auxc = r->cnt;
-        while(auxc != NULL) {
-            if(searchRoutersGraph(r, t, tn, routerConnected(auxc)) == TRUE) return TRUE;
-            else auxc = nextCNT(auxc);
         }
+        Router * ro2 = findRouter(rlist, cntRouterName(cnt));
+        if(!isFlagged(rlist, routerName(ro2)))
+            verification = routersGraphSearch(rlist, ro2, rname2);
+        if(verification) return TRUE;
+        else cnt = nextCNT(cnt);
     }
     return FALSE;
 }

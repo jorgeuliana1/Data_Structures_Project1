@@ -3,6 +3,8 @@
 #include "router.h"
 typedef struct terminal Terminal;
 
+int checkTRConnection(Terminal * tlist, char * rname, char * tname);
+
 /*
 --inicializeTerminals--
 Precondition: Terminal list in not inicialized.
@@ -94,6 +96,6 @@ int thereIsTRConnection(Terminal * t);
 
 Terminal * nextTerminal(Terminal * t);
 
-int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * file, int veriFile);
+int sendDataPackage(Terminal * t, Router * r, char * ton, char * tdn, FILE * file, int veriFile, FILE * log, int veriLog);
 
 #endif
