@@ -110,8 +110,10 @@ void runScript(FILE * f, FILE * logFile, FILE * output) {
                 i = 0;
                 break;
         }
+        //To avoid errors.
         c = destroyCommand(c);
     }
+    //Cleaning the heap.
     r = decimateRouters(r);
     t = decimateTerminals(t);
     gv = closeFile(gv);
