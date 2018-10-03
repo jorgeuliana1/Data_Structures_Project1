@@ -44,8 +44,10 @@ FILE * openReadingFile(int argv, char * argc[], FILE * l) {
     FILE * f;
     if(argv > 1)
         f = fopen(argc[1], "r");
-    else
+    else {
         fprintf(l, "I/O ERROR: File not informed.\n\n");
+        exit(0);
+    }
     if(f == NULL) {
         fprintf(l, "I/O ERROR: Invalid file. Will result in SegFault.\n\n");
     }

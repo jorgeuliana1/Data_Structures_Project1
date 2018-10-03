@@ -27,6 +27,11 @@ FILE * closeFile(FILE * a) {
 }
 
 void runScript(FILE * f, FILE * logFile, FILE * output) {
+    /*--INPUT--
+    f:       input.txt.
+    logFile: log.txt.
+    output:  saida.txt.
+    */
     int i = 1;
     Command * c;
     FILE * gv = openGVFile();
@@ -110,8 +115,10 @@ void runScript(FILE * f, FILE * logFile, FILE * output) {
                 i = 0;
                 break;
         }
+        //To avoid errors.
         c = destroyCommand(c);
     }
+    //Cleaning the heap.
     r = decimateRouters(r);
     t = decimateTerminals(t);
     gv = closeFile(gv);

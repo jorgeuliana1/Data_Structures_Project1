@@ -7,6 +7,7 @@
 #include "libs/dot.h"
 
 int main(int argv, char* argc[]) {
+    //CODE BY JOSÉ JORGE AND LUCCA PASSOS.
     FILE * o = startOutputFile();
     FILE * l = startLogFile();
     FILE * f = openReadingFile(argv, argc, l);

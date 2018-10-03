@@ -61,7 +61,7 @@ Router * findRouter(Router * rlist, char * name) {
 Router * registerRouter(Router * r, char * n, char * o, FILE * l) {
     Router * aux = findRouter(r, n);
     if(aux != NULL) {
-        fprintf(l, "ERROR: %s can't be registered, there's a router with the same name.\n\n", n);
+        fprintf(l, "Erro: %s nao pode ser registrado, ha um roteador com o mesmo nome.\n", n);
         return r;
     }
     Router * newRouter = (Router *)malloc(sizeof(Router));
@@ -81,7 +81,7 @@ Router * removeRouter(Router * rlist, char * rn, FILE * l, int veriFile) {
     Router * temp = findRouter(rlist, rn);
     Router * temp2;
     if(temp == NULL) {
-        if(veriFile) fprintf(l, "Erro: Roteador %s inexistente no NetMap.\n\n", rn);
+        if(veriFile) fprintf(l, "Erro: Roteador %s inexistente no NetMap.\n", rn);
         return rlist;
     }
     while(thereIsRRConnection(temp)) {
@@ -114,14 +114,6 @@ void carrierFrequency(Router * rlist, char * carrier, FILE * o){
     fprintf(o, "FREQUENCIAOPERADORA %s: %d\n", carrier, i);
 }
 
-void printRouters(Router * r) {
-    while(r != NULL){
-        printf("name: %s\n", r->name);
-        printf("carrier: %s\n\n", r->carrier);
-        r = r->Next;
-    }
-}
-
 char * routerName(Router * r) {
     if(r != NULL) return r->name;
     else return NULL;
@@ -143,10 +135,10 @@ Router * webConnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, int
     if(r1 == NULL || r2 == NULL) {
         if(veriFile) {
             if(r1 == NULL) {
-                fprintf(l, "ERROR: %s can't be connected, there isn't a router with this name.\n\n", rn1);
+                fprintf(l, "Erro: %s nao pode ser conectado, nao ha um roteador com esse nome.\n", rn1);
             }
             if(r2 == NULL) {
-                fprintf(l, "ERROR: %s can't be connected, there isn't a router with this name.\n\n", rn2);
+                fprintf(l, "Erro: %s nao pode ser conectado, nao ha um roteador com esse nome.\n", rn2);
             }
         }
         return rlist;
@@ -161,10 +153,10 @@ Router * webDisconnectRouters(Router * rlist, char * rn1, char * rn2, FILE * l, 
     Router * temp2 = findRouter(rlist, rn2);
     if(temp1 == NULL || temp2 == NULL) {
         if(temp1 == NULL) {
-            if(veriFile) fprintf(l, "ERROR: %s can't be disconnected, there isn't a router with this name.\n\n", rn1);
+            if(veriFile) fprintf(l, "Erro: %s nao pode ser desconectado, nao ha roteador com esse nome.\n", rn1);
         }
         if(temp2 == NULL) {
-            if(veriFile) fprintf(l, "ERROR: %s can't be disconnected, there isn't a router with this name.\n\n", rn2);
+            if(veriFile) fprintf(l, "Erro: %s nao pode ser desconectado, nao ha roteador com esse nome.\n", rn2);
         }
         return rlist;
     }
@@ -200,13 +192,11 @@ int routersGraphSearch(Router * rlist, Router * ro, char * rname2) {
     */
     //STEPS 1, 2 AND 3
     int verification;
-    printf("checking %s %s\n", routerName(ro), rname2);
     if(ro == NULL) return FALSE;
     flagRouter(rlist, routerName(ro));
     Connect * cnt = ro->cnt;
     while(cnt != NULL) {
         if(!strcmp(cntRouterName(cnt), rname2)) {
-            printf("is connected\n");
             return TRUE;
         }
         Router * ro2 = findRouter(rlist, cntRouterName(cnt));
@@ -248,22 +238,3 @@ int isFlagged(Router * r, char * rn) {
     if(r1 == NULL) return -1;
     else return r1->flag;
 }
-
-/*
-void printRouterAndConnections(Router * r) {
-    Router * auxr = r;
-    Connect * auxc;
-    while(auxr != NULL) {
-        auxc = auxr->cnt;
-        printf("Router: %s\n", routerName(auxr));
-        while(auxc != NULL) {
-            printf("%s;", routerConnected(auxc));
-            auxc = nextCNT(auxc);
-        }
-        printf("\n");
-        auxr = nextRouter(auxr);
-    }
-    printf("\n");
-    return;
-}
-*/
