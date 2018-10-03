@@ -11,9 +11,9 @@ typedef struct router Router;
 /*
 --Inicialize router--
 Precondition: Router list is not inicilized.
-Input: Not inicialized router list.
+Input: None.
 Output: Inicialized router list.
-Postcondition: Router list is inicilized.
+Postcondition: Router list is inicialized.
 */
 Router * inicializeRouters();
 
