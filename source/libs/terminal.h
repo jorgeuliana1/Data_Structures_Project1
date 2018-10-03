@@ -53,7 +53,7 @@ Terminal * registerTerminal(Terminal * t, char * n, char * l, FILE * lf, int ver
 Precondition: Terminal exists.
 Input: Terminal list and terminal name, log file and confirmation if the user
 wants to print the messages on the file.
-Output: Update terminal list.
+Output: Updated terminal list.
 Postcondition: Terminal is removed from the network.
 */
 Terminal * removeTerminal(Terminal * tlist, char * tname, FILE * l, int veriFile);
