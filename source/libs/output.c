@@ -27,6 +27,11 @@ FILE * closeFile(FILE * a) {
 }
 
 void runScript(FILE * f, FILE * logFile, FILE * output) {
+    /*--INPUT--
+    f:       input.txt.
+    logFile: log.txt.
+    output:  saida.txt.
+    */
     int i = 1;
     Command * c;
     FILE * gv = openGVFile();
