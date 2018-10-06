@@ -39,6 +39,7 @@ static int numArgs(int n) {
     else return 1;
 }
 //END OF STATIC FUNCTIONS AREA
+
 //FUNCTIONS AREA
 FILE * openReadingFile(int argv, char * argc[], FILE * l) {
     FILE * f;

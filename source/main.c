@@ -15,11 +15,13 @@ int main(int argv, char* argc[]) {
     //FILE * l: Log file "log.txt"
     FILE * f = openReadingFile(argv, argc, l);
     //FILE * f: Input file
+
     /*
     If the input file was informed and exists the program will read the
     commands and execute it.
     */
     if(f != NULL) runScript(f, l, o);
+    
     //Finishing the program.
     f = closeFile(f);
     l = closeFile(l);
