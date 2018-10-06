@@ -10,10 +10,15 @@
 //STRUCT AREA
 struct router {
     char * name;
+    //String with the router name.
     char * carrier;
+    //String with carrier name.
     Connect * cnt;
+    //Pointer that contains the connected router.
     Router * Next;
+    //Pointer that contains the next router of the list.
     int flag;
+    //Flag for specific uses.
 };
 //END OF STRUCT AREA
 //STATIC FUNCTIONS AREA

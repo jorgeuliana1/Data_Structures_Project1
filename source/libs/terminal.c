@@ -9,9 +9,13 @@
 //STRUCT AREA
 struct terminal {
     char * name;
+    //String with the terminal name.
     char * place;
+    //String with the terminal locale name.
     Terminal * Next;
+    //Pointer to the next terminal of the list.
     Router * r;
+    //Pointer to the connected router.
 };
 //END OF STRUCT AREA
 
