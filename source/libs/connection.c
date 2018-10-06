@@ -16,6 +16,7 @@ struct connections {
 //STATIC FUNCTIONS AREA
 static Connect * findPreviousConnection(Connect * origin, Connect * target) {
     Connect * aux = origin;
+
     //Start of "While"
     while(aux != NULL &&
     aux->Next != NULL &&
@@ -23,6 +24,7 @@ static Connect * findPreviousConnection(Connect * origin, Connect * target) {
     strcmp(routerName(target->r), routerName(aux->Next->r)))
         aux = aux->Next;
     //End of "While"
+    
     if(aux->Next != NULL && !strcmp(routerName(target->r), routerName(aux->Next->r)))
         return aux;
     else return NULL;
