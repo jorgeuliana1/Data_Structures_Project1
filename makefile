@@ -1,8 +1,16 @@
-all: install execute clear
+CC = gcc
+CFLAGS =
+SOURCES = source/main.c source/libs/*.c
+OBJECTS = $(SOURCES)
+LDFLAGS =
+PARAM =
+EXE = NetMap
 
-install:
-		@gcc source/main.c source/libs/*.c -o NetMap
-execute:
-		./NetMap
-clear:
-		@rm NetMap
+all: $(EXE)
+
+$(EXE): $(OBJECTS)
+		$(CC) $^ -o $@ $(LDFLAGS)
+clean:
+		rm $(EXE)
+run: $(EXE)
+		./$^ $(ARGS)
