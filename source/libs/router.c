@@ -100,7 +100,7 @@ Router * registerRouter(Router * r, char * n, char * o, FILE * l) {
     Router * newRouter = (Router *)malloc(sizeof(Router));
     newRouter->name = adjustString(n);
     newRouter->carrier = adjustString(o);
-    newRouter->cnt = NULL;
+    newRouter->cnt = inicializeConnection(newRouter->cnt);
     newRouter->flag = FALSE;
 
     if(r == NULL) {
@@ -259,12 +259,13 @@ int routersGraphSearch(Router * rlist, Router * ro, char * rname2) {
     rname2: Router 2 name.
     */
     //Verification:
-    int verification;
+    int verification = 0;
     //"ro" stands for "router of origin".
     if(ro == NULL) return FALSE;
 
     //Flag router to avoid problems.
     flagRouter(rlist, routerName(ro));
+
     Connect * cnt = ro->cnt;
     while(cnt != NULL) {
         if(!strcmp(cntRouterName(cnt), rname2)) {
