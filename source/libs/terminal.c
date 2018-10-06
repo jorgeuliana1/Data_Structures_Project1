@@ -127,7 +127,7 @@ Terminal * findTerminal(Terminal * tlist, char * name) {
     */
     while(tlist != NULL && strcmp(tlist->name, name)) {
         tlist = tlist->Next;
-        //It will go to the next terminal until it finds the wanted router.
+        //It will go to the next terminal until it finds the wanted one.
     }
     return tlist;
 }
