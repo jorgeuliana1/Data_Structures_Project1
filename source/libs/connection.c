@@ -43,7 +43,7 @@ Connect * inicializeConnection(Connect * connect) {
 Connect * addConnection(Connect * w, void * rlist, char * rn) {
     //Casting to avoid problems with void pointer.
     /*
-    NOTE: VOID POINTER WAS USED BECAUSE IT WASN'T IMPOSSIBLE TO ADD THE ROUTER
+    NOTE: VOID POINTER WAS USED BECAUSE IT WASN'T POSSIBLE TO ADD THE ROUTER
     TYPE TO THE HEADER FILE.
     */
     rlist = (Router *) rlist;
