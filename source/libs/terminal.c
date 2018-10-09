@@ -82,8 +82,9 @@ static int verifyTerminalsAccess(Router * rlist, Terminal * tlist, char * tname1
     -3    - If t1 and t2 doesn't have any connection or doesn't exist.
     */
     //Declaring variables
-    char * rname1;
-    char * rname2;
+    char * rname1 = NULL;
+    char * rname2 = NULL;
+    //Strings are NULL to avoid errors.
     Terminal * aux1 = tlist;
     //Seaching for the routers that are connected to the informed terminal.
     while(aux1 != NULL) {
