@@ -84,7 +84,7 @@ static int verifyTerminalsAccess(Router * rlist, Terminal * tlist, char * tname1
     //Declaring variables
     char * rname1 = NULL;
     char * rname2 = NULL;
-    //Strings are initially NULL to avoid errors.
+    //Strings are NULL to avoid errors.
     Terminal * aux1 = tlist;
     //Seaching for the routers that are connected to the informed terminal.
     while(aux1 != NULL) {
