@@ -23,7 +23,7 @@ int main(int argv, char* argc[]) {
     if(f != NULL) runScript(f, l, o);
     
     //Finishing the program.
-    f = closeFile(f);
+    if(f !=  NULL) f = closeFile(f);
     l = closeFile(l);
     o = closeFile(o);
     return 0;
