@@ -52,7 +52,7 @@ Connect * addConnection(Connect * w, void * rlist, char * rn) {
     Router * temp = findRouter(rlist, rn);
     
     if(w != NULL) {
-        //If there isn't any connection.
+        //If there is at least one connection.
         Connect * temp1;
         temp1 = (Connect *)malloc(sizeof(Connect));
         temp1->r = temp;
@@ -61,7 +61,7 @@ Connect * addConnection(Connect * w, void * rlist, char * rn) {
         if(temp2 != NULL) temp2->Next = temp1;
         else w = temp1;
     } else {
-        //If there is at least one connection.
+        //If there isn't any connection.
         w = (Connect *)malloc(sizeof(Connect));
         w->Next = NULL;
         w->r = temp;
