@@ -41,13 +41,16 @@ Connect * inicializeConnection(Connect * connect) {
 }
 
 Connect * addConnection(Connect * w, void * rlist, char * rn) {
-    //Casting to avoid problems with void pointer.
     /*
     NOTE: VOID POINTER WAS USED BECAUSE IT WASN'T POSSIBLE TO ADD THE ROUTER
     TYPE TO THE HEADER FILE.
     */
+    
     rlist = (Router *) rlist;
+    //Casting to avoid problems with void pointer.
+    
     Router * temp = findRouter(rlist, rn);
+    
     if(w != NULL) {
         //If there isn't any connection.
         Connect * temp1;
@@ -63,6 +66,7 @@ Connect * addConnection(Connect * w, void * rlist, char * rn) {
         w->Next = NULL;
         w->r = temp;
     }
+    
     return w;
 }
 
